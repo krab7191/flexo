@@ -1,6 +1,13 @@
-# Flexo
+<p align="center">
+    <img alt="flexo framework logo" src="/docs/marmot.png" height="128">
+    <h1 align="center">Flexo Framework</h1>
+</p>
 
-Flexo is a powerful and flexible agent framework. It provides a FastAPI-based RESTful API for deploying customizable AI agents that can execute Python functions and interact with external services while handling real-time streaming responses.
+<p align="center">
+  <img align="cener" alt="Project Status: Beta" src="https://img.shields.io/badge/Status-Beta-yellow">
+
+  <h4 align="center">Flexo is a powerful and flexible agent framework. It provides a FastAPI-based RESTful API for deploying customizable AI agents that can execute Python functions and interact with external services while handling real-time streaming responses.</h4>
+</p>
 
 ---
 
