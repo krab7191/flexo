@@ -48,21 +48,21 @@ docker run -p 8000:8000 --env-file .env flexo-agent
 ## Documentation
 
 ### Getting Started
-- ⚡ [Quick Setup Guide](https://pages.github.com/ibm/flexo/getting-started/)
-- 🔧 [Agent Configuration](https://pages.github.com/ibm/flexo/agent-configuration/)
-- 📖 [Building from Source](https://pages.github.com/ibm/flexo/deployment/overview/)
-- 🚀 [API Reference](https://pages.github.com/ibm/flexo/api/)
+- ⚡ [Quick Setup Guide](https://ibm.github.io/flexo/getting-started/)
+- 🔧 [Agent Configuration](https://ibm.github.io/flexo/agent-configuration/)
+- 📖 [Building from Source](https://ibm.github.io/flexo/deployment/overview/)
+- 🚀 [API Reference](https://ibm.github.io/flexo/api/)
 
 ### Reference Documentation
-- 🤖 [Agent System](https://pages.github.com/ibm/flexo/reference/agent/)
-- 🛠️ [Tools Overview](https://pages.github.com/ibm/flexo/reference/tools/)
-- 📊 [Data Models](https://pages.github.com/ibm/flexo/reference/data_models/)
-- 🗄️ [Database Integration](https://pages.github.com/ibm/flexo/reference/database/)
+- 🤖 [Agent System](https://ibm.github.io/flexo/reference/agent/)
+- 🛠️ [Tools Overview](https://ibm.github.io/flexo/reference/tools/)
+- 📊 [Data Models](https://ibm.github.io/flexo/reference/data_models/)
+- 🗄️ [Database Integration](https://ibm.github.io/flexo/reference/database/)
 
 ### Deployment Guides
-- 🏗️ [Building Images](https://pages.github.com/ibm/flexo/deployment/building-image/)
-- 📦 [Container Registries](https://pages.github.com/ibm/flexo/deployment/registries/overview/)
-- 🚀 [Platform Deployment](https://pages.github.com/ibm/flexo/deployment/platforms/overview/)
+- 🏗️ [Building Images](https://ibm.github.io/flexo/deployment/building-image/)
+- 📦 [Container Registries](https://ibm.github.io/flexo/deployment/registries/overview/)
+- 🚀 [Platform Deployment](https://ibm.github.io/flexo/deployment/platforms/overview/)
 
 ---
 
@@ -83,7 +83,7 @@ flexo/
 ---
 
 ## Support
-- 📚 [Documentation](https://pages.github.com/ibm/flexo/)
+- 📚 [Documentation](https://ibm.github.io/flexo/)
 - 🐛 [Issue Tracker](../../issues)
 - 🤝 [Contributing](CONTRIBUTING.md)
 
