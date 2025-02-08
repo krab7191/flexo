@@ -34,7 +34,7 @@ This Code of Conduct applies both within project spaces (e.g., GitHub repositori
 
 ## Reporting
 
-If you experience or witness any form of harassment, discrimination, or other unacceptable behavior, please report it immediately by contacting the Flexo team at **[INSERT CONTACT EMAIL]**. All complaints will be reviewed and investigated promptly and fairly. All community members are expected to respect the decisions of those handling complaints.
+If you experience or witness any form of harassment, discrimination, or other unacceptable behavior, please report it immediately by contacting the [Flexo team](MAINTAINERS.md). All complaints will be reviewed and investigated promptly and fairly. All community members are expected to respect the decisions of those handling complaints.
 
 ## Enforcement
 
