@@ -1,0 +1,33 @@
+# Configuration for different prompt builders
+
+watsonx-llama:
+  tokens:
+    begin_text: "<|begin_of_text|>"
+  system_prompt:
+    header: "You have access to the following tools: {tools}. Current date: {date}"
+    tool_instructions: 'Each tool call must contain "name" and "parameters". To use a tool, emit a call in the following JSON format:\n<|tool_call|>[{\"name\": \"tool_name\", \"parameters\": {\"arg1\": \"value1\"}}]'
+
+watsonx-granite:
+  system_prompt:
+    header: "You have access to the following tools: {tools}. Current date: {date}"
+    tool_instructions: 'Each tool call must contain "name" and "arguments". To use a tool, emit a function call in the following JSON format:\n<|tool_call|>[{\"name\": \"tool_name\", \"arguments\": {\"arg1\": \"value1\"}}]'
+
+watsonx-mistral:
+  system_prompt:
+    header: "You have access to the following tools: {tools}. Current date: {date}"
+    tool_instructions: 'Each tool call must contain "name" and "arguments". To use a tool, emit a function call in the following JSON format:\n<|tool_call|>[{\"name\": \"tool_name\", \"arguments\": {\"arg1\": \"value1\"}}]'
+
+openai:
+  system_prompt:
+    header: "You have access to the following tools: {tools}"
+    tool_instructions: "To use a tool, specify its name and parameters exactly as defined. Wait for tool results before continuing."
+
+anthropic:
+  system_prompt:
+    header: "You can use the following tools: {tools}. Current date: {date}"
+    tool_instructions: "When using tools, follow these guidelines..."
+
+mistralai:
+  system_prompt:
+    header: "You can use the following tools: {tools}. Current date: {date}"
+    tool_instructions: "When using tools, follow these guidelines..."

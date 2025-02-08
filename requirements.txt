@@ -1,0 +1,26 @@
+# Core Framework Dependencies
+fastapi>=0.115.6
+starlette>=0.41.3
+uvicorn>=0.34.0
+pydantic>=2.10.4
+
+# HTTP and API Client Libraries
+aiohttp>=3.11.11
+requests>=2.32.2
+
+# AI/ML Service SDKs
+mistral_common>=1.5.1
+openai~=1.60.2
+
+# Vector Database and Search
+elasticsearch>=8.17.0
+pymilvus>=2.5.0
+
+# Configuration and Environment
+python-dotenv>=1.0.1
+PyYAML>=6.0.2
+json5>=0.10.0
+Jinja2>=3.1.4
+
+# Utilities
+tenacity~=9.0.0

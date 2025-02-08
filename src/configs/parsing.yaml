@@ -1,0 +1,20 @@
+# Configuration for tool call parsing
+# Used by BaseToolCallParser and its subclasses
+
+# Tokens to be removed during text cleaning (used in BaseToolCallParser.clean_text)
+clean_tokens:
+  - "\n"
+  - "\r"
+  - "\t"
+  - "  "
+  - '[TOOL_CALL]'
+  - '[TOOL_CALLS]'
+  - '<|python_tag|>'
+  - '<|tool_call|>'
+  - '<tool_call>'
+
+# Parsing format configurations
+formats:
+  # Non-JSON format configuration (used in NonJSONToolCallParser.extract)
+  non_json_format:
+    function_call_pattern: '<function=([^>]+)>{([^}]+)}</function>'

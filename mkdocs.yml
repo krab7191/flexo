@@ -1,0 +1,127 @@
+site_name: Flexo
+site_url: https://pages.github.com/ibm/flexo
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: blue
+    accent: pink
+    toggle:
+      icon: material/weather-night
+      name: Switch to dark mode
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Deployment:
+    - Overview: deployment/overview.md
+    - Building Images: deployment/building-image.md
+    - Platforms:
+      - Overview: deployment/platforms/overview.md
+      - Code Engine: deployment/platforms/code-engine.md
+      - Fargate: deployment/platforms/fargate.md
+      - Kubernetes: deployment/platforms/kubernetes.md
+      - OpenShift: deployment/platforms/openshift.md
+    - Registries:
+      - Overview: deployment/registries/overview.md
+      - DockerHub: deployment/registries/dockerhub.md
+      - IBM Registry: deployment/registries/ibm-registry.md
+  - Configuration: agent-configuration.md
+  - REST API: api.md
+  - Code Reference:
+    - Overview: reference/index.md
+    - Agent:
+      - Overview: reference/agent/index.md
+      - Streaming Chat Agent: reference/agent/chat_agent_streaming.md
+    - API:
+      - Overview: reference/api/index.md
+      - Chat Completions API: reference/api/chat_completions_api.md
+      - SSE Models: reference/api/sse_models.md
+    - Data Models:
+      - Overview: reference/data_models/index.md
+      - Agent Models: reference/data_models/chat_agent_streaming.md
+      - Chat Completion Models: reference/data_models/chat_completions.md
+      - Streaming Models: reference/data_models/streaming.md
+      - Tool Models: reference/data_models/tools.md
+      - WX Assistant Models: reference/data_models/wx_assistant.md
+    - Database:
+      - Overview: reference/database/index.md
+      - Base Adapter: reference/database/base_adapter.md
+      - Elasticsearch Client: reference/database/elastic_client.md
+      - Milvus Client: reference/database/milvus_client.md
+      - Query Builder: reference/database/query_builder.md
+    - LLM:
+      - Overview: reference/llm/index.md
+      - Factory: reference/llm/llm_factory.md
+      - Adapters:
+        - Base Adapter: reference/llm/adapters/base_vendor_adapter.md
+        - Anthropic: reference/llm/adapters/anthropic_adapter.md
+        - MistralAI: reference/llm/adapters/mistral_ai_adapter.md
+        - OpenAI: reference/llm/adapters/openai_adapter.md
+        - WatsonX:
+          - Overview: reference/llm/adapters/watsonx/index.md
+          - Adapter: reference/llm/adapters/watsonx/watsonx_adapter.md
+          - Config: reference/llm/adapters/watsonx/watsonx_config.md
+          - Token Manager: reference/llm/adapters/watsonx/ibm_token_manager.md
+      - Pattern Detection:
+        - Overview: reference/llm/pattern_detection/index.md
+        - Aho-Corasick Pattern: reference/llm/pattern_detection/aho_corasick_pattern.md
+      - Tool Detection:
+        - Overview: reference/llm/tool_detection/index.md
+        - Base Strategy: reference/llm/tool_detection/base_detection_strategy.md
+        - Detection Result: reference/llm/tool_detection/detection_result.md
+        - Manual Strategy: reference/llm/tool_detection/manual_detection_strategy.md
+        - Vendor Strategy: reference/llm/tool_detection/vendor_detection_strategy.md
+    - Prompt Builders:
+      - Overview: reference/prompt_builders/index.md
+      - Base Builder: reference/prompt_builders/base_prompt_builder.md
+      - Models: reference/prompt_builders/prompt_models.md
+      - Anthropic: reference/prompt_builders/anthropic/anthropic_prompt_builder.md
+      - MistralAI: reference/prompt_builders/mistral_ai/mistral_ai_prompt_builder.md
+      - OpenAI: reference/prompt_builders/openai/openai_prompt_builder.md
+      - WatsonX:
+        - Overview: reference/prompt_builders/watsonx/index.md
+        - Granite: reference/prompt_builders/watsonx/granite/granite_prompt_builder.md
+        - Llama: reference/prompt_builders/watsonx/llama/llama_prompt_builder.md
+        - Mistral: reference/prompt_builders/watsonx/mistral/mistral_prompt_builder.md
+    - Tools:
+      - Overview: reference/tools/index.md
+      - Base Tool: reference/tools/base_tool.md
+      - Base REST Tool: reference/tools/base_rest_tool.md
+      - Tool Registry: reference/tools/tool_registry.md
+      - Implementations:
+        - Overview: reference/tools/implementations/index.md
+        - RAG Tool: reference/tools/implementations/rag_tool.md
+        - Weather Tool: reference/tools/implementations/weather_tool.md
+      - Parsers:
+        - Overview: reference/tools/parsers/index.md
+        - Base Parser: reference/tools/parsers/base_tool_call_parser.md
+        - JSON Parser: reference/tools/parsers/json_tool_call_parser.md
+        - Non-JSON Parser: reference/tools/parsers/non_json_tool_call_parser.md
+      - Utils:
+        - Overview: reference/tools/utils/index.md
+        - Token Manager: reference/tools/utils/token_manager.md
+    - Utils:
+      - Overview: reference/utils/index.md
+      - Factory: reference/utils/factory.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: ["."]
+          options:
+            show_source: true
+            show_root_heading: true
+            heading_level: 2
+
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.details

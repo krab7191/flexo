@@ -1,0 +1,25 @@
+# src/configs/tool_call_patterns.yaml
+
+patterns:
+  MistralPattern0: '[{"name'
+  MistralPattern1: '[TOOL_CALL]'
+  MistralPattern2: '[TOOL_CALLS]'
+  LlamaPattern0: '<function='
+  LlamaPattern1: '<|python_tag|>'
+  LlamaPattern2: '{"name'
+  GranitePattern0: '<|tool_call|>'
+  GranitePattern1: '<tool_call>'
+  GranitePattern2: '<|tool_calls|>'
+  GranitePattern3: '<tool_calls>'
+  GranitePattern4: '[tool_call]'
+  GranitePattern5: | 
+    {
+      "name
+  GranitePattern6: | 
+    ```json
+    {
+      "name
+  GranitePattern7: |
+    ```
+    {
+      "name
