@@ -1,6 +1,6 @@
 # Flexo
 
-Flexo is a powerful and flexible agent framework optimized for watsonx.ai and IBM services. It provides a FastAPI-based RESTful API for deploying customizable AI agents that can execute Python functions and interact with external services while handling real-time streaming responses.
+Flexo is a powerful and flexible agent framework. It provides a FastAPI-based RESTful API for deploying customizable AI agents that can execute Python functions and interact with external services while handling real-time streaming responses.
 
 ---
 
