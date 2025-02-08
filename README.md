@@ -48,6 +48,7 @@ docker run -p 8000:8000 --env-file .env flexo-agent
 ## Documentation
 
 ### Getting Started
+- 📚 [Documentation](https://ibm.github.io/flexo/)
 - ⚡ [Quick Setup Guide](https://ibm.github.io/flexo/getting-started/)
 - 🔧 [Agent Configuration](https://ibm.github.io/flexo/agent-configuration/)
 - 📖 [Building from Source](https://ibm.github.io/flexo/deployment/overview/)
