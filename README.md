@@ -17,22 +17,30 @@ Flexo is a powerful and flexible agent framework. It provides a FastAPI-based RE
 
 ### Local Development
 
-1. Clone and install:
+1. Fork and clone:
    ```bash
+   # First, fork the repository on GitHub by clicking the 'Fork' button
+   # Then clone your fork:
    git clone https://github.com/YOUR_USERNAME/flexo.git
    cd flexo
 
+   # Add the upstream repository
+   git remote add upstream https://github.com/ibm/flexo.git
+   ```
+
+2. Set up the environment:
+   ```bash
    # Create virtual environment
    python -m venv venv
    source venv/bin/activate  # or `venv\Scripts\activate` on Windows
    pip install -r requirements.txt
    ```
 
-2. Configure:
+3. Configure:
    - Copy `.env.example` to `.env` and add your credentials
    - Review `src/configs/agent.yaml` for agent settings
 
-3. Run the server:
+4. Run the server:
    ```bash
    uvicorn src.main:app --reload --host 127.0.0.1 --port 8000
    ```
