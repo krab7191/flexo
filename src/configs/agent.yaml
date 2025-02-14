@@ -4,8 +4,7 @@
 # Basic agent configuration
 name: flexo
 history_limit: 4
-logging_level: INFO
-max_streaming_iterations: 2 # Number of times the agent is allowed to return to streaming (e.g. after tools execution)
+max_streaming_iterations: 4 # Number of times the agent is allowed to return to streaming (e.g. after tools execution)
 
 # Response timeouts
 timeouts:
@@ -43,8 +42,8 @@ use_vendor_chat_completions: false    # Options: true, false
 models_config:
   main_chat_model:
     # WatsonX Configuration
-    vendor: watsonx-llama    # Options: watsonx-llama/granite/mistral, openai, anthropic, mistral-ai
-    model_id: meta-llama/llama-3-3-70b-instruct  # Other options: mistralai/mistral-large, meta-llama/llama-3-405b-instruct, ibm/granite-3-8b-instruct
+    vendor: watsonx-llama # Options: watsonx-llama/granite/mistral, openai, anthropic, mistral-ai
+    model_id: meta-llama/llama-3-405b-instruct # Other options: mistralai/mistral-large, meta-llama/llama-3-405b-instruct, ibm/granite-3-8b-instruct
     decoding_method: greedy
     max_new_tokens: 4000
 
@@ -58,19 +57,15 @@ models_config:
 tools_config:
   # Weather API Integration
   weather_tool:
-    name: weather_tool
     endpoint_url: "https://api.openweathermap.org/data/2.5/weather"
     api_key_env: "OWM_API_KEY"
   
   # Wikipedia API Integration
   wikipedia_tool:
-    name: wikipedia_tool
     endpoint_url: "https://{lang}.wikipedia.org/api/rest_v1/page/summary/{encoded_query}"
 
   # RAG Tool with Elasticsearch (optional, not enabled by default)
   rag_tool:
-    name: rag_tool
-    description: "Tool used to retrieve information from the 'Attention Is All You Need' paper using natural language search."
     connector_config:
       connector_type: elasticsearch
       index_name: my_index

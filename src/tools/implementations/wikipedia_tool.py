@@ -1,24 +1,27 @@
-# src/tools/tools/wikipedia_tool.py
+# src/tools/implementations/wikipedia_tool.py
 
-from typing import Optional, Any, Dict
 from urllib.parse import quote
+from typing import Optional, Any, Dict
 
-from src.data_models.tools import ContextModel, ToolResponse
-from src.tools.base_rest_tool import BaseRESTTool, ResponseFormat
+from src.data_models.tools import ToolResponse
+from src.data_models.agent import StreamContext
+from src.tools.core.tool_registry import ToolRegistry
 from src.utils.json_formatter import format_json_to_document
+from src.tools.core.base_rest_tool import BaseRESTTool, ResponseFormat
 
 
+@ToolRegistry.register_tool()
 class WikipediaTool(BaseRESTTool):
+    name = "wikipedia_tool"
+
     def __init__(self, config: Optional[Dict] = None):
         """
         Initialize the WikipediaTool with configuration options.
         """
         super().__init__(config=config)
-        self.name = self.config.get("name", "wikipedia_tool")
         self.description = "Fetch a summary of a Wikipedia page for a given query."
         self.strict = False
 
-        # Define the tool parameters that OpenAI (or another LLM) can use to call this tool.
         self.parameters = {
             "type": "object",
             "properties": {
@@ -42,7 +45,7 @@ class WikipediaTool(BaseRESTTool):
         self.max_retries = 3
         self.retry_delay = 1.0
 
-    async def execute(self, context: Optional[ContextModel] = None, **kwargs) -> ToolResponse:
+    async def execute(self, context: Optional[StreamContext] = None, **kwargs) -> ToolResponse:
         """
         Execute the Wikipedia API call.
 

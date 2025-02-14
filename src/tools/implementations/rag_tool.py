@@ -1,28 +1,41 @@
-# src/tools/tools/rag_tool.py
+# src/tools/implementations/rag_tool.py
+
+"""
+WARNING: SSL certificate verification is currently disabled for Elasticsearch connections in this tool.
+This configuration is intended for development/testing environments only and poses
+security risks in production. Before deploying to production, proper SSL certificate
+verification should be implemented to ensure secure communication with the Elasticsearch
+cluster. Contact your cloud provider for the appropriate CA certificates.
+
+For more information on secure Elasticsearch connections, see:
+https://www.elastic.co/guide/en/elasticsearch/client/python-api/current/connecting.html#auth-https
+"""
 
 import json
 import logging
 import asyncio
 from typing import Optional, Dict
 
-from src.tools.base_tool import BaseTool
-from src.data_models.tools import ContextModel, ToolResponse
+from src.tools.core.base_tool import BaseTool
+from src.data_models.tools import ToolResponse
+from src.data_models.agent import StreamContext
+from src.tools.core.tool_registry import ToolRegistry
 from src.database import ElasticsearchClient, ElasticQueryBuilder
 
 
+# @ToolRegistry.register_tool()
 class RAGTool(BaseTool):
+    name = "rag_tool"
+
     def __init__(self, config: Optional[Dict] = None):
         super().__init__()
         self.config = config or {}
-        self.name = self.config.get("name", "medicare_search")
-        self.strict = True  # Enable strict schema adherence
+        self.strict = True
 
-        # Set up tool details from config
         self.description = ("Tool used to retrieve information from the 'Medicare & You 2025' handbook "
                             "using natural language search. Use this tool when you need information about "
                             "Medicare coverage, enrollment, costs, and benefits.")
 
-        # Update parameters to match OpenAI's schema structure
         self.parameters = {
             'type': 'object',
             'properties': {
@@ -39,7 +52,11 @@ class RAGTool(BaseTool):
 
         self.logger = logging.getLogger(self.__class__.__name__)
         elasticsearch_config = self.config.get('connector_config', {})
-        self.search_client = ElasticsearchClient()
+
+        # TODO(security): Temporary SSL verification bypass for development.
+        # Must be updated with proper certificate verification before production deployment.
+        self.search_client = ElasticsearchClient(verify_certs=False)
+
         self.query_builder = ElasticQueryBuilder(elasticsearch_config)
         self.top_k = self.config.get('top_k', 3)
         self.query_name = self.config.get('query_name', 'basic_match')
@@ -47,7 +64,7 @@ class RAGTool(BaseTool):
         self.max_retries = elasticsearch_config.get('max_retries', 3)
         self.index_name = elasticsearch_config.get('index_name', 'medicare_handbook_2025')
 
-    async def execute(self, context: Optional[ContextModel] = None, **kwargs) -> ToolResponse:
+    async def execute(self, context: Optional[StreamContext] = None, **kwargs) -> ToolResponse:
         """Executes the RAG (Retrieval-Augmented Generation) tool to retrieve Medicare-related content.
 
         This method performs a search query against an Elasticsearch index to retrieve relevant
