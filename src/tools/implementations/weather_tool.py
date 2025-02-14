@@ -1,18 +1,21 @@
-# src/tools/tools/weather_tool.py
+# src/tools/implementations/weather_tool.py
 
 import os
 from typing import Optional, Any, Dict
 
-from src.data_models.tools import ContextModel, ToolResponse
-from src.tools.base_rest_tool import BaseRESTTool, ResponseFormat
+from src.data_models.tools import ToolResponse
+from src.data_models.agent import StreamContext
+from src.tools.core.tool_registry import ToolRegistry
 from src.utils.json_formatter import format_json_to_document
+from src.tools.core.base_rest_tool import BaseRESTTool, ResponseFormat
 
 
+@ToolRegistry.register_tool()
 class WeatherTool(BaseRESTTool):
+    name = "weather_tool"
+
     def __init__(self, config: Optional[Dict] = None):
         super().__init__(config=config)
-
-        self.name = self.config.get("name", "weather_tool")
         self.description = 'Get current temperature and weather information for a specified location.'
         self.strict = False
 
@@ -50,7 +53,7 @@ class WeatherTool(BaseRESTTool):
         self.max_retries = 3
         self.retry_delay = 1.0
 
-    async def execute(self, context: Optional[ContextModel] = None, **kwargs) -> ToolResponse:
+    async def execute(self, context: Optional[StreamContext] = None, **kwargs) -> ToolResponse:
         """Execute a weather data request.
 
         Args:
