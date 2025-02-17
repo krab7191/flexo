@@ -106,7 +106,7 @@ class VendorToolCallDetectionStrategy(BaseToolCallDetectionStrategy):
                 self.partial_args += arguments
 
         # If finish_reason indicates the tool call is complete, finalize it
-        if finish_reason == "tool_calls":
+        if finish_reason in ["tool_calls", "tool_use"]:
             if self.partial_name:
                 try:
                     parsed_args = json.loads(self.partial_args) if self.partial_args else {}
@@ -170,6 +170,7 @@ class VendorToolCallDetectionStrategy(BaseToolCallDetectionStrategy):
 
         if self.partial_name or self.partial_args:
             self.logger.debug("Incomplete tool call data at stream end")
+            self.logger.debug(f"Name: {self.partial_name}, Args: {self.partial_args}")
             return DetectionResult(state=DetectionState.NO_MATCH)
 
         self.logger.debug("No tool calls to finalize")
