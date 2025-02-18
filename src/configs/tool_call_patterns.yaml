@@ -23,3 +23,13 @@ patterns:
     ```
     {
       "name
+  GranitePattern8: |
+    ```
+    [
+      {
+        "name"
+  GranitePattern9: |
+    [
+      {
+        "name"
+  GranitePattern10: '{ "name"'

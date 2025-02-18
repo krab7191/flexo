@@ -1,4 +1,4 @@
-# src/prompt_builders/llama/llama_prompt_builder.py
+# src/prompt_builders/vllm/llama/llama_prompt_builder.py
 
 from typing import Optional
 from datetime import datetime
@@ -12,7 +12,7 @@ from src.data_models.chat_completions import TextChatMessage, SystemMessage, Use
 from src.data_models.tools import Tool
 
 
-class WatsonXLlamaPromptBuilder(BasePromptBuilder):
+class VLLMLlamaPromptBuilder(BasePromptBuilder):
     """Prompt builder for the Llama model architecture.
 
     This class handles the construction of prompts and chat messages specifically

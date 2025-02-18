@@ -3,7 +3,7 @@
 
 # Basic agent configuration
 name: flexo
-history_limit: 4
+history_limit: 3 # You can set to 1 to disable multi-turn
 max_streaming_iterations: 4 # Number of times the agent is allowed to return to streaming (e.g. after tools execution)
 
 # Response timeouts
@@ -35,8 +35,8 @@ system_prompt: |
   actionable responses.
 
 # Core behavior settings
-detection_mode: vendor                # Options: manual, vendor
-use_vendor_chat_completions: true    # Options: true, false
+detection_mode: manual                # Options: manual, vendor
+use_vendor_chat_completions: false    # Options: true, false
 
 # Model Configuration
 models_config:
@@ -54,9 +54,24 @@ models_config:
     # temperature: 0.7
 
      # Alternative Anthropic Configuration (uncomment to use)
-     vendor: anthropic
-     model_id: claude-3-5-sonnet-latest
-     max_tokens: 4000
+#     vendor: anthropic
+#     model_id: claude-3-5-sonnet-latest
+#     max_tokens: 4000
+#     temperature: 0.7
+
+     # Alternative vLLM Configuration (uncomment to use)
+#     vendor: vllm-granite
+#     base_url: http://192.168.1.202:8000/v1
+#     model_id: ibm-granite/granite-3.1-8b-instruct
+#     max_tokens: 2000
+#     temperature: 0.7
+
+     # Alternative ollama Configuration (uncomment to use)
+     vendor: ollama-granite
+     base_url: http://192.168.1.202:11434/v1
+     model_id: granite31
+     api_key: ollama
+     max_tokens: 2000
      temperature: 0.7
 
 # Tool Configurations
