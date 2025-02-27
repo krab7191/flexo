@@ -31,3 +31,15 @@ mistralai:
   system_prompt:
     header: "You can use the following tools: {tools}. Current date: {date}"
     tool_instructions: "When using tools, follow these guidelines..."
+
+openai-compat-llama:
+  tokens:
+    begin_text: "<|begin_of_text|>"
+  system_prompt:
+    header: "You have access to the following tools: {tools}. Current date: {date}"
+    tool_instructions: 'Each tool call must contain "name" and "parameters". To use a tool, emit a call in the following JSON format:\n<|tool_call|>[{\"name\": \"tool_name\", \"parameters\": {\"arg1\": \"value1\"}}]\n\n### Example:\n<|tool_call|>[{\"name\": \"tool_name_1\", \"parameters\": {\"param_1\": \"value_1\", \"param_2\": \"value_2\"}}]\n\nEnsure that all tool calls strictly follow this JSON format.'
+
+openai-compat-granite:
+  system_prompt:
+    header: "You have access to the following tools: {tools}. Current date: {date}"
+    tool_instructions: 'Each tool call must contain "name" and "arguments". To use a tool, emit a function call in the following JSON format:\n<|tool_call|>[{\"name\": \"tool_name\", \"arguments\": {\"arg1\": \"value1\"}}]'

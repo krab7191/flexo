@@ -42,16 +42,16 @@ use_vendor_chat_completions: false    # Options: true, false
 models_config:
   main_chat_model:
     # WatsonX Configuration
-#    vendor: watsonx-llama # Options: watsonx-llama/granite/mistral, openai, anthropic, mistral-ai
-#    model_id: meta-llama/llama-3-405b-instruct # Other options: mistralai/mistral-large, meta-llama/llama-3-405b-instruct, ibm/granite-3-8b-instruct
-#    decoding_method: greedy
-#    max_new_tokens: 4000
+    vendor: watsonx-granite # Options: watsonx-llama/granite/mistral, openai, anthropic, mistral-ai
+    model_id: ibm/granite-3-8b-instruct # Other options: mistralai/mistral-large, meta-llama/llama-3-405b-instruct, ibm/granite-3-8b-instruct
+    decoding_method: greedy
+    max_new_tokens: 4000
 
     # Alternative OpenAI Configuration (uncomment to use)
-    # vendor: openai
-    # model_id: gpt-4-mini
-    # max_tokens: 4000
-    # temperature: 0.7
+#     vendor: openai
+#     model_id: gpt-4-mini
+#     max_tokens: 4000
+#     temperature: 0.7
 
      # Alternative Anthropic Configuration (uncomment to use)
 #     vendor: anthropic
@@ -60,19 +60,19 @@ models_config:
 #     temperature: 0.7
 
      # Alternative vLLM Configuration (uncomment to use)
-#     vendor: vllm-granite
-#     base_url: http://192.168.1.202:8000/v1
-#     model_id: ibm-granite/granite-3.1-8b-instruct
+#     vendor: openai-compat-llama
+#     base_url: http://0.0.0.0:8000/v1
+#     model_id: meta-llama/Llama-3.2-3B-Instruct
 #     max_tokens: 2000
 #     temperature: 0.7
 
      # Alternative ollama Configuration (uncomment to use)
-     vendor: ollama-granite
-     base_url: http://192.168.1.202:11434/v1
-     model_id: granite31
-     api_key: ollama
-     max_tokens: 2000
-     temperature: 0.7
+#     vendor: openai-compat-granite
+#     base_url: http://0.0.0.0:11434/v1
+#     model_id: granite31
+#     api_key: ollama
+#     max_tokens: 2000
+#     temperature: 0.7
 
 # Tool Configurations
 tools_config:

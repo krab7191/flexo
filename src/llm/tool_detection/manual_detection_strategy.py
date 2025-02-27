@@ -8,7 +8,7 @@ from src.data_models.agent import StreamContext
 from src.tools.core.parsers import BaseToolCallParser
 from src.data_models.chat_completions import ToolCall, FunctionDetail
 from src.llm.tool_detection import BaseToolCallDetectionStrategy
-from src.llm.pattern_detection.aho_corasick_pattern import AhoCorasickBufferedProcessor
+from src.llm.pattern_detection import AhoCorasickBufferedProcessorNormalized, AhoCorasickBufferedProcessor
 from src.llm.tool_detection.detection_result import DetectionResult, DetectionState
 
 
@@ -50,7 +50,7 @@ class ManualToolCallDetectionStrategy(BaseToolCallDetectionStrategy):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.logger.debug("Initializing ManualToolCallDetectionStrategy with config: %s", pattern_config_path)
         self.tool_call_parser = parser
-        self.pattern_detector = AhoCorasickBufferedProcessor(pattern_config_path)
+        self.pattern_detector = AhoCorasickBufferedProcessorNormalized(pattern_config_path)
 
         self.pre_tool_call_content: List[str] = []
         self.tool_call_buffer: str = ""

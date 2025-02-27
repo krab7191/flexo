@@ -1,4 +1,4 @@
-# src/llm/adapters/vllm_adapter.py
+# src/llm/adapters/openai_compat_adapter.py
 
 import logging
 from typing import AsyncGenerator, List, Optional
@@ -12,18 +12,17 @@ from src.api.sse_models import SSEChunk, SSEChoice, SSEDelta, SSEToolCall, SSEFu
 logger = logging.getLogger(__name__)
 
 
-class VLLMAdapter(BaseVendorAdapter):
-    """Adapter for interacting with locally deployed vLLM models.
+class OpenAICompatAdapter(BaseVendorAdapter):
+    """Adapter for interacting with Open AI compatible APIs.
 
-    Supports both chat completions and direct prompt generation through vLLM's
-    OpenAI-compatible API endpoints. Handles streaming responses and converts
+    Supports both chat completions and completions endpoints. Handles streaming responses and converts
     them to standardized SSE chunks.
 
     Attributes:
-        model_name (str): The model identifier being served by vLLM
-        base_url (str): URL of the vLLM server (default: http://localhost:8000/v1)
-        api_key (str): API key for vLLM server authentication
-        client (AsyncOpenAI): Configured OpenAI client for vLLM
+        model_name (str): The model identifier being served
+        base_url (str): URL of the server (default: http://localhost:8000/v1)
+        api_key (str): API key for server authentication
+        client (AsyncOpenAI): Configured OpenAI client
     """
 
     def __init__(
@@ -33,11 +32,11 @@ class VLLMAdapter(BaseVendorAdapter):
             api_key: str = "dummy-key",
             **default_params
     ):
-        """Initialize the vLLM adapter.
+        """Initialize the adapter.
 
         Args:
             model_name (str): Name of the model being served (e.g. "NousResearch/Llama-2-7b")
-            base_url (str): URL of the vLLM server
+            base_url (str): URL of the server
             api_key (str): API key for authentication
             **default_params: Additional parameters for generation (temperature etc.)
         """
@@ -46,14 +45,14 @@ class VLLMAdapter(BaseVendorAdapter):
         self.api_key = api_key
         self.default_params = default_params
 
-        # Configure OpenAI client for vLLM server
+        # Configure OpenAI client for server
         self.client = AsyncOpenAI(
             base_url=self.base_url,
             api_key=self.api_key
         )
 
-        logger.info(f"Initialized vLLM adapter for model: {self.model_name}")
-        logger.debug(f"Using vLLM server at: {self.base_url}")
+        logger.info(f"Initialized adapter for model: {self.model_name}")
+        logger.debug(f"Using server at: {self.base_url}")
         logger.debug(f"Default parameters: {default_params}")
 
     async def gen_chat_sse_stream(
@@ -62,7 +61,7 @@ class VLLMAdapter(BaseVendorAdapter):
             tools: Optional[List[Tool]] = None,
             **kwargs
     ) -> AsyncGenerator[SSEChunk, None]:
-        """Generate streaming chat completion using vLLM's chat endpoint.
+        """Generate streaming chat completion using chat endpoint.
 
         Args:
             messages (List[TextChatMessage]): List of chat messages
@@ -90,20 +89,20 @@ class VLLMAdapter(BaseVendorAdapter):
                 request_params["tools"] = [tool.model_dump() for tool in tools]
                 request_params["tool_choice"] = "auto"
 
-            # Stream response from vLLM
+            # Stream response
             async for chunk in await self.client.chat.completions.create(**request_params):
                 yield self._convert_to_sse_chunk(chunk)
 
         except Exception as e:
-            logger.error(f"Error in vLLM chat stream: {str(e)}", exc_info=True)
-            raise RuntimeError(f"vLLM chat completion failed: {str(e)}") from e
+            logger.error(f"Error in chat stream: {str(e)}", exc_info=True)
+            raise RuntimeError(f"Chat completion failed: {str(e)}") from e
 
     async def gen_sse_stream(
             self,
             prompt: str,
             **kwargs
     ) -> AsyncGenerator[SSEChunk, None]:
-        """Generate streaming completion using vLLM's completions endpoint.
+        """Generate streaming completion using completions endpoint.
 
         Args:
             prompt (str): Input text prompt
@@ -116,7 +115,7 @@ class VLLMAdapter(BaseVendorAdapter):
             # Prepare request payload
             request_params = {
                 "model": self.model_name,
-                "prompt": prompt,  # vLLM completions endpoint accepts raw string prompts
+                "prompt": prompt,
                 "stream": True,
                 **self.default_params,
                 **kwargs
@@ -129,14 +128,14 @@ class VLLMAdapter(BaseVendorAdapter):
                 yield self._convert_to_sse_chunk(chunk)
 
         except Exception as e:
-            logger.error(f"Error in vLLM completion stream: {str(e)}", exc_info=True)
-            raise RuntimeError(f"vLLM completion failed: {str(e)}") from e
+            logger.error(f"Error in completion stream: {str(e)}", exc_info=True)
+            raise RuntimeError(f"Completion failed: {str(e)}") from e
 
     def _convert_to_sse_chunk(self, raw_chunk) -> SSEChunk:
-        """Convert vLLM/OpenAI response chunk to standardized SSE format.
+        """Convert response chunk to standardized SSE format.
 
         Args:
-            raw_chunk: Raw chunk from vLLM API
+            raw_chunk: Raw chunk from API
 
         Returns:
             SSEChunk: Standardized chunk format
@@ -195,5 +194,5 @@ class VLLMAdapter(BaseVendorAdapter):
             )
 
         except Exception as e:
-            logger.error(f"Error converting vLLM chunk: {raw_chunk}", exc_info=True)
-            raise ValueError(f"Failed to convert vLLM response: {str(e)}") from e
+            logger.error(f"Error converting chunk: {raw_chunk}", exc_info=True)
+            raise ValueError(f"Failed to convert response: {str(e)}") from e

@@ -4,7 +4,7 @@ import logging
 from typing import Dict
 from .adapters.watsonx.watsonx_config import WatsonXConfig
 from .adapters.watsonx.ibm_token_manager import IBMTokenManager
-from .adapters import OpenAIAdapter, WatsonXAdapter, AnthropicAdapter, MistralAdapter, VLLMAdapter
+from .adapters import OpenAIAdapter, WatsonXAdapter, AnthropicAdapter, MistralAdapter, OpenAICompatAdapter
 
 logger = logging.getLogger(__name__)
 
@@ -87,12 +87,12 @@ class LLMFactory:
                 elif vendor == "anthropic":
                     cls._adapters[model_name] = AnthropicAdapter(model_name=model_id, **adapter_config)
                     logger.debug(f"Initialized Anthropic adapter for model: {model_name}")
-                elif vendor == "mistral":
+                elif vendor == "mistral-ai":
                     cls._adapters[model_name] = MistralAdapter(model_name=model_id, **adapter_config)
                     logger.debug(f"Initialized Mistral adapter for model: {model_name}")
-                elif "vllm" in vendor:
-                    cls._adapters[model_name] = VLLMAdapter(model_name=model_id, **adapter_config)
-                    logger.debug(f"Initialized vLLM adapter for model: {model_name}")
+                elif "openai-compat" in vendor:
+                    cls._adapters[model_name] = OpenAICompatAdapter(model_name=model_id, **adapter_config)
+                    logger.debug(f"Initialized Open AI compatible adapter for model: {model_name}")
                 else:
                     raise ValueError(f"Unknown vendor '{vendor}' for model '{model_name}'.")
             except Exception as e:

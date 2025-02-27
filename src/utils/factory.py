@@ -12,12 +12,8 @@ from src.prompt_builders import (
     WatsonXLlamaPromptBuilder,
     WatsonXGranitePromptBuilder,
     WatsonXMistralPromptBuilder,
-    VLLMGranitePromptBuilder,
-    VLLMLlamaPromptBuilder,
-    # VLLMMistralPromptBuilder,
-    # OllamaGranitePromptBuilder,
-    # OllamaLlamaPromptBuilder,
-    # OllamaMistralPromptBuilder
+    OpenAICompatGranitePromptBuilder,
+    OpenAICompatLlamaPromptBuilder,
 )
 
 
@@ -50,20 +46,12 @@ class PromptBuilderFactory:
                 return OpenAIPromptBuilder()
             case "anthropic":
                 return AnthropicPromptBuilder()
-            case "mistral_ai":
+            case "mistral-ai":
                 return MistralAIPromptBuilder()
-            case "vllm-granite":
-                return VLLMGranitePromptBuilder()
-            case "vllm-llama":
-                return VLLMLlamaPromptBuilder()
-            # case "vllm-mistral":
-            #     return VLLMMistralPromptBuilder()
-            # case "ollama-granite":
-            #     return OllamaGranitePromptBuilder()
-            # case "ollama-llama":
-            #     return OllamaLlamaPromptBuilder()
-            # case "ollama-mistral":
-            #     return OllamaMistralPromptBuilder()
+            case "openai-compat-granite":
+                return OpenAICompatGranitePromptBuilder()
+            case "openai-compat-llama":
+                return OpenAICompatLlamaPromptBuilder()
             case _:
                 raise ValueError(f"No prompt builder available for vendor: {vendor}")
 

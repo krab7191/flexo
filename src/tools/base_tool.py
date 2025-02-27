@@ -2,7 +2,8 @@
 
 from typing import Optional
 from abc import abstractmethod
-from src.data_models.tools import ContextModel, ToolResponse
+from src.api.request_models import ContextModel
+from src.data_models.tools import ToolResponse
 from src.data_models.tools import Tool, Function, FunctionParameters
 
 
