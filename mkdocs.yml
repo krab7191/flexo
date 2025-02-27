@@ -90,6 +90,9 @@ nav:
         - Granite: reference/prompt_builders/watsonx/granite/granite_prompt_builder.md
         - Llama: reference/prompt_builders/watsonx/llama/llama_prompt_builder.md
         - Mistral: reference/prompt_builders/watsonx/mistral/mistral_prompt_builder.md
+      - OpenAI Compatible:
+          - Granite: reference/prompt_builders/openai_compat/granite_prompt_builder.md
+          - Llama: reference/prompt_builders/openai_compat/llama_prompt_builder.md
     - Tools:
       - Overview: reference/tools/index.md
       - Base Tool: reference/tools/base_tool.md
