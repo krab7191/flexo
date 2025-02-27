@@ -39,20 +39,21 @@ class AhoCorasickBufferedProcessorNormalized(BaseBufferedProcessor):
         the earliest match found along with any safe text that can be output.
 
         Args:
-            combined_original: The original text chunk to process.
+            `combined_original`: The original text chunk to process.
 
         Returns:
             A tuple containing:
-                - PatternMatchResult: Result object containing match information and
+
+                - `PatternMatchResult`: Result object containing match information and
                     processed text.
-                - str: Any trailing text that needs to be carried over to the next
+                - `str`: Any trailing text that needs to be carried over to the next
                     chunk.
 
-        Example:
-            >>> processor = AhoCorasickBufferedProcessorNormalized('patterns.yaml')
-            >>> result, trailing = processor.process_chunk_impl('some text')
-            >>> print(result.matched, result.pattern_name)
-            False None
+        ``` python title="Example usage"
+        processor = AhoCorasickBufferedProcessorNormalized('patterns.yaml')
+        result, trailing = processor.process_chunk_impl('some text')
+        print(result.matched, result.pattern_name)  # False None
+        ```
         """
         result = PatternMatchResult()
         # Normalize the entire combined_original and get index mapping.

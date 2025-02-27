@@ -12,11 +12,11 @@ class BaseBufferedProcessor:
     matching behavior.
 
     Attributes:
-        tool_call_message: Message to include when a tool call is detected.
-        trailing_buffer_original: Buffer containing text carried over from previous chunks.
+        `tool_call_message`: Message to include when a tool call is detected.
+        `trailing_buffer_original`: Buffer containing text carried over from previous chunks.
 
     Args:
-        tool_call_message: Optional message to use when a tool call is detected.
+        `tool_call_message`: Optional message to use when a tool call is detected.
             Defaults to "Tool call detected."
     """
 
@@ -39,16 +39,16 @@ class BaseBufferedProcessor:
         delegates the actual processing to process_chunk_impl.
 
         Args:
-            chunk: The new text chunk to process.
+            `chunk`: The new text chunk to process.
 
         Returns:
-            PatternMatchResult containing the processed output and any match information.
+            `PatternMatchResult` containing the processed output and any match information.
 
-        Example:
-            >>> processor = MyProcessor()
-            >>> result = await processor.process_chunk("some text")
-            >>> print(result.output)
-            some text
+        ``` python title="Example usage"
+        processor = MyProcessor()
+        result = await processor.process_chunk("some text")
+        print(result.output)  # some text
+        ```
         """
         # Combine the trailing buffer with new chunk
         combined_original = self.trailing_buffer_original + chunk
@@ -67,13 +67,13 @@ class BaseBufferedProcessor:
         buffered text.
 
         Returns:
-            PatternMatchResult containing any remaining buffered text.
+            `PatternMatchResult` containing any remaining buffered text.
 
-        Example:
-            >>> processor = MyProcessor()
-            >>> result = await processor.flush_buffer()
-            >>> print(len(result.output))
-            0
+        ``` python title="Example usage"
+        processor = MyProcessor()
+        result = await processor.flush_buffer()
+        print(len(result.output))  # 0
+        ```
         """
         from src.data_models.streaming import PatternMatchResult
         result = PatternMatchResult()
@@ -90,13 +90,14 @@ class BaseBufferedProcessor:
         pattern matching behavior.
 
         Args:
-            combined_original: Text to process, including any trailing text from
+            `combined_original`: Text to process, including any trailing text from
                 previous chunks.
 
         Returns:
             A tuple containing:
-                - PatternMatchResult: Result object with match information and
+
+                - `PatternMatchResult`: Result object with match information and
                     processed text.
-                - str: Any trailing text to carry over to the next chunk.
+                - `str`: Any trailing text to carry over to the next chunk.
         """
         pass

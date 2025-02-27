@@ -5,11 +5,6 @@
 This module provides a wrapper around the base Aho-Corasick automaton that handles
 text normalization for pattern matching. It normalizes patterns during initialization
 and provides methods to search in normalized text.
-
-Example:
-    patterns = {'pattern1': 'hello world', 'pattern2': 'good bye'}
-    automaton = AhoCorasickAutomatonNormalized(patterns)
-    matches = automaton.search_chunk('hello    world')  # Matches despite extra spaces
 """
 
 from typing import Dict, List, Tuple
@@ -25,9 +20,9 @@ class AhoCorasickAutomatonNormalized:
     insensitive to whitespace differences.
 
     Attributes:
-        normalized_patterns: Dictionary mapping pattern names to their normalized forms.
-        pattern_lengths: Dictionary storing the lengths of normalized patterns.
-        automaton: The underlying AhoCorasickAutomaton instance.
+        `normalized_patterns`: Dictionary mapping pattern names to their normalized forms.
+        `pattern_lengths`: Dictionary storing the lengths of normalized patterns.
+        `automaton`: The underlying AhoCorasickAutomaton instance.
 
     Args:
         patterns: Dictionary mapping pattern names to their original string patterns.
@@ -55,19 +50,20 @@ class AhoCorasickAutomatonNormalized:
         """Searches for pattern matches in normalized text.
 
         Args:
-            norm_chunk: The normalized text chunk to search in. Should be
+            `norm_chunk`: The normalized text chunk to search in. Should be
                 pre-normalized before calling this method.
 
         Returns:
             A list of tuples, where each tuple contains:
+
                 - The ending index of the match in the normalized text (int)
                 - The name of the matched pattern (str)
 
-        Example:
-            >>> automaton = AhoCorasickAutomatonNormalized({'pat1': 'hello world'})
-            >>> matches = automaton.search_chunk('helloworld')
-            >>> print(len(matches))
-            1
+        ``` python title="Example usage"
+        automaton = AhoCorasickAutomatonNormalized({'pat1': 'hello world'})
+        matches = automaton.search_chunk('helloworld')
+        print(len(matches))  # 1
+        ```
         """
         return self.automaton.search_chunk(norm_chunk)
 
@@ -75,12 +71,12 @@ class AhoCorasickAutomatonNormalized:
         """Returns the length of a normalized pattern.
 
         Args:
-            pattern_name: The name of the pattern whose length is required.
+            `pattern_name`: The name of the pattern whose length is required.
 
         Returns:
-            The length of the normalized pattern.
+            The length of the normalized pattern as an integer.
 
         Raises:
-            KeyError: If the pattern_name is not found in the patterns dictionary.
+            `KeyError`: Error raised if the `pattern_name` is not found in the patterns dictionary.
         """
         return self.pattern_lengths[pattern_name]

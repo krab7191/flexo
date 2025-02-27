@@ -14,13 +14,13 @@ class AhoCorasickBufferedProcessor(BaseBufferedProcessor):
     processor is sensitive to whitespace and performs exact string matching.
 
     Attributes:
-        automaton: An instance of AhoCorasickAutomaton for pattern matching.
-        max_pattern_len: The length of the longest pattern in the raw patterns.
-        tool_call_message: Message to include when a tool call is detected.
+        `automaton`: An instance of AhoCorasickAutomaton for pattern matching.
+        `max_pattern_len`: The length of the longest pattern in the raw patterns.
+        `tool_call_message`: Message to include when a tool call is detected.
 
     Args:
-        yaml_path: Path to the YAML file containing pattern definitions.
-        tool_call_message: Optional message to use when a tool call is detected.
+        `yaml_path`: Path to the YAML file containing pattern definitions.
+        `tool_call_message`: Optional message to use when a tool call is detected.
             Defaults to "Tool call detected."
     """
 
@@ -38,20 +38,21 @@ class AhoCorasickBufferedProcessor(BaseBufferedProcessor):
         the earliest match found along with any safe text that can be output.
 
         Args:
-            combined_original: The text chunk to process.
+            `combined_original`: The text chunk to process.
 
         Returns:
             A tuple containing:
-                - PatternMatchResult: Result object containing match information and
+
+                - `PatternMatchResult`: Result object containing match information and
                     processed text.
-                - str: Any trailing text that needs to be carried over to the next
+                - `str`: Any trailing text that needs to be carried over to the next
                     chunk.
 
-        Example:
-            >>> processor = AhoCorasickBufferedProcessor('patterns.yaml')
-            >>> result, trailing = processor.process_chunk_impl('some text')
-            >>> print(result.matched, result.pattern_name)
-            False None
+        ``` python title="Example usage"
+        processor = AhoCorasickBufferedProcessor('patterns.yaml')
+        result, trailing = processor.process_chunk_impl('some text')
+        print(result.matched, result.pattern_name)  # False None
+        ```
         """
         result = PatternMatchResult()
         # Search in the original text

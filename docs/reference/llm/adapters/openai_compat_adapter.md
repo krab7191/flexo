@@ -1,4 +1,4 @@
-::: src.prompt_builders.watsonx.mistral.mistral_prompt_builder.WatsonXMistralPromptBuilder
+::: src.llm.adapters.openai_compat_adapter.OpenAICompatAdapter
     options:
         show_root_heading: true
         show_source: true

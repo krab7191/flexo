@@ -118,10 +118,10 @@ class AhoCorasickAutomaton:
                 - The ending index of the match in the chunk (int)
                 - The name of the matched pattern (str)
 
-        Example:
-            >>> automaton = AhoCorasickAutomaton({'pat1': 'abc', 'pat2': 'bc'})
-            >>> automaton.search_chunk('abc')
-            [(1, 'pat2'), (2, 'pat1')]
+        ``` python title="Example usage"
+        automaton = AhoCorasickAutomaton({'pat1': 'abc', 'pat2': 'bc'})
+        automaton.search_chunk('abc')  # [(1, 'pat2'), (2, 'pat1')]
+        ```
         """
         found_patterns = []
         for i, char in enumerate(chunk):

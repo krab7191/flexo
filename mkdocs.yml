@@ -63,9 +63,15 @@ nav:
           - Adapter: reference/llm/adapters/watsonx/watsonx_adapter.md
           - Config: reference/llm/adapters/watsonx/watsonx_config.md
           - Token Manager: reference/llm/adapters/watsonx/ibm_token_manager.md
+        - OpenAI-Compatible: reference/llm/adapters/openai_compat_adapter.md
       - Pattern Detection:
         - Overview: reference/llm/pattern_detection/index.md
-        - Aho-Corasick Pattern: reference/llm/pattern_detection/aho_corasick_pattern.md
+        - Aho-Corasick: reference/llm/pattern_detection/aho_corasick.md
+        - Aho-Corasick Normalized: reference/llm/pattern_detection/aho_corasick_normalized.md
+        - Base Processor Class: reference/llm/pattern_detection/base_buffered_processor.md
+        - Buffered Processor Normalized: reference/llm/pattern_detection/buffered_processor_normalized.md
+        - Buffered Processor Standard: reference/llm/pattern_detection/buffered_processor_standard.md
+        - Pattern Utils: reference/llm/pattern_detection/pattern_utils.md
       - Tool Detection:
         - Overview: reference/llm/tool_detection/index.md
         - Base Strategy: reference/llm/tool_detection/base_detection_strategy.md

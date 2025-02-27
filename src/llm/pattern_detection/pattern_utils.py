@@ -20,10 +20,24 @@ def load_patterns(yaml_path: str) -> Dict[str, str]:
 
 
 def normalize_and_map(text: str):
-    """
-    Returns (normalized_text, index_map), where:
-      - normalized_text is 'text' with all whitespace removed.
-      - index_map[i] = original index of the i-th character in normalized_text.
+    """Returns a tuple of normalized text with whitespace removed and an index mapping.
+
+    Processes the input text by removing all whitespace characters and creating
+    a mapping that tracks the original position of each character.
+
+    Args:
+        text: The input string to be normalized.
+
+    Returns:
+        tuple: A tuple containing two elements:
+
+            - `normalized_text` (str): The input text with all whitespace removed.
+            - `index_map` (list): A list where index_map[i] is the original index
+              of the i-th character in normalized_text.
+
+    ``` python title="Example usage"
+    normalize_and_map("a b c")  # ('abc', [0, 2, 4])
+    ```
     """
     normalized_chars = []
     index_map = []
