@@ -8,4 +8,4 @@ from .mistral_ai.mistral_ai_prompt_builder import MistralAIPromptBuilder
 from .prompt_models import PromptPayload, PromptBuilderOutput
 from .openai_compat.granite.granite_prompt_builder import OpenAICompatGranitePromptBuilder
 from .openai_compat.llama.llama_prompt_builder import OpenAICompatLlamaPromptBuilder
-
+from .grok.grok_prompt_builder import GrokPromptBuilder

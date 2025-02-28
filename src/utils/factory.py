@@ -14,6 +14,7 @@ from src.prompt_builders import (
     WatsonXMistralPromptBuilder,
     OpenAICompatGranitePromptBuilder,
     OpenAICompatLlamaPromptBuilder,
+    GrokPromptBuilder
 )
 
 
@@ -52,6 +53,8 @@ class PromptBuilderFactory:
                 return OpenAICompatGranitePromptBuilder()
             case "openai-compat-llama":
                 return OpenAICompatLlamaPromptBuilder()
+            case "xai" | "grok":
+                return GrokPromptBuilder()
             case _:
                 raise ValueError(f"No prompt builder available for vendor: {vendor}")
 

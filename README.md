@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-  <img align="cener" alt="Project Status: Beta" src="https://img.shields.io/badge/Status-Beta-yellow">
+  <img align="center" alt="Project Status: Beta" src="https://img.shields.io/badge/Status-Beta-yellow">
 
   <h4 align="center">Flexo is a powerful and flexible agent framework. It provides a FastAPI-based RESTful API for deploying customizable AI agents that can execute Python functions and interact with external services while handling real-time streaming responses.</h4>
 </p>
@@ -57,6 +57,38 @@
 docker build -t flexo-agent .
 docker run -p 8000:8000 --env-file .env flexo-agent
 ```
+
+
+---
+
+## Supported LLM Providers
+
+Flexo supports multiple LLM providers through a unified adapter interface. Configure your preferred models in `src/configs/models.yaml`.
+
+### Cloud Hosted Providers
+
+| Provider | Supported API Endpoints                        | Service Type |
+|----------|------------------------------------------------|--------------|
+| OpenAI | `/chat/completions`                            | ☁️ API Service |
+| Anthropic | `/messages`                                    | ☁️ API Service |
+| X.AI | `/chat/completions`                            | ☁️ API Service |
+| Mistral AI | `/chat/completions`                            | ☁️ API Service |
+| IBM WatsonX | `/text/chat_stream`, `/text/generation_stream` | ☁️ API Service |
+
+### Local/Self-Hosted Options
+
+| Implementation | Key Feature | Deployment Type |
+|----------------|-------------|----------------|
+| vLLM | High throughput, optimized for GPU | 🖥️ Server |
+| Ollama | Simplified model management | 💻 Desktop/Server |
+| LLaMA.cpp | CPU-friendly, resource efficient | 💻 Desktop/Server |
+| LM Studio | User-friendly model testing | 💻 Desktop |
+| LocalAI | Multi-model hub with extended features | 🖥️ Server |
+| Text Generation WebUI | Rich UI with extensive options | 🖥️ Server |
+
+All local implementations connect through Flexo's OpenAI-compatible adapter, which handles the communication with these tools regardless of their specific API implementations. It can use both `/completions` and `/chat/completions` endpoints.
+
+For detailed configuration including environment variables, API keys, and base URLs, see our [Model Configuration Guide](https://ibm.github.io/flexo/model-configuration/).
 
 ---
 

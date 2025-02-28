@@ -4,3 +4,4 @@ from .openai_adapter import OpenAIAdapter
 from .mistral_ai_adapter import MistralAdapter
 from .watsonx.watsonx_adapter import WatsonXAdapter
 from .openai_compat_adapter import OpenAICompatAdapter
+from .grok_adapter import GrokAdapter

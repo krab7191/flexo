@@ -13,6 +13,178 @@ The [**Flexo Agent Library**](https://github.com/IBM/flexo) is a powerful and fl
 
 ---
 
+## Key Features
+- **Configurable Agent**: YAML-based configuration for custom behaviors
+- **Tool Integration**: Execute Python functions and REST API calls
+- **Streaming Support**: Real-time streaming with pattern detection
+- **Production Ready**: Containerized deployment support with logging
+- **FastAPI Backend**: Modern async API with comprehensive docs
+
+---
+
+# Supported LLM Providers
+
+<div class="grid" markdown style="text-align: center">
+
+<div markdown>
+
+<h2>☁️ Cloud Providers</h2>
+
+<div class="provider-grid">
+    <div class="provider-card">
+        <img src="images/OpenAI-white-monoblossom.png" width="90">
+        <p><strong>OpenAI</strong></p>
+        <p class="description">GPT-powered models</p>
+    </div>
+    <div class="provider-card">
+        <img src="images/watsonxai.png" width="70">
+        <p><strong>watsonx.ai</strong></p>
+        <p class="description">Enterprise AI solutions</p>
+    </div>
+    <div class="provider-card">
+        <img src="images/anthropic.png" width="70">
+        <p><strong>Anthropic</strong></p>
+        <p class="description">Claude family models</p>
+    </div>
+    <div class="provider-card">
+        <img src="images/grok.png" width="70">
+        <p><strong>xAI</strong></p>
+        <p class="description">Grok and beyond</p>
+    </div>
+    <div class="provider-card">
+        <img src="images/mistral-color.png" width="70">
+        <p><strong>Mistral AI</strong></p>
+        <p class="description">Efficient open models</p>
+    </div>
+</div>
+
+</div>
+
+<div markdown style="text-align: center">
+
+<h2>🖥️ Local & Self-Hosted Options</h2>
+
+<div class="provider-grid">
+    <div class="provider-card">
+        <img src="images/vllm-logo-text-dark.png" width="140">
+        <p class="description">High-throughput serving</p>
+    </div>
+    <div class="provider-card">
+        <img src="images/ollama.png" width="70">
+        <p><strong>Ollama</strong></p>
+        <p class="description">Easy local LLMs</p>
+    </div>
+    <div class="provider-card">
+        <img src="images/llamacpp.png" width="190">
+        <p class="description">Optimized C++ runtime</p>
+    </div>
+    <div class="provider-card">
+        <img src="images/lm-studio.png" width="70">
+        <p><strong>LM Studio</strong></p>
+        <p class="description">User-friendly interface</p>
+    </div>
+    <div class="provider-card">
+        <img src="images/localai.png" width="70">
+        <p><strong>LocalAI</strong></p>
+        <p class="description">Self-hosted versatility</p>
+    </div>
+</div>
+
+</div>
+
+</div>
+
+
+## ⚙️ Unified Configuration Interface
+
+Switch providers effortlessly with Flexo's adapter layer. Customize your LLM settings in one place:
+
+```yaml
+gpt-4o:
+  provider: "openai"  # Choose your provider
+  model: "gpt-4o"     # Select specific model
+  temperature: 0.7
+  max_tokens: 4000    # Additional model-specific parameters
+```
+
+> **Need more details?** Check our comprehensive [Model Configuration Guide](model-configuration.md) for provider-specific settings and optimization tips.
+
+<style>
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.provider-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.provider-card {
+    text-align: center;
+    padding: 15px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.provider-card img {
+    margin-bottom: 10px;
+}
+
+.provider-card p {
+    margin: 5px 0;
+}
+
+.description {
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+</style>
+
+---
+
+## Quick Start Guide
+
+### 1. Local Development
+Start developing with Flexo locally:
+
+- ⚡ [Quick Setup Guide](getting-started.md)
+- 🔧 [Configure Your Agent](agent-configuration.md)
+- 📖 [Build from Source](deployment/building-image.md)
+- 🚀 [Run the Server](getting-started.md)
+
+### 2. Production Deployment
+Deploy Flexo to your preferred platform:
+
+| Platform | Best For | Guide |
+|----------|----------|-------|
+| IBM Code Engine | Serverless, pay-per-use | [Deploy →](deployment/platforms/code-engine.md) |
+| AWS Fargate | AWS integration | [Deploy →](deployment/platforms/fargate.md) |
+| OpenShift | Enterprise, hybrid cloud | [Deploy →](deployment/platforms/openshift.md) |
+| Kubernetes | Custom infrastructure | [Deploy →](deployment/platforms/kubernetes.md) |
+
+---
+
+## Documentation
+
+### Deployment Guides
+- 📦 [Container Registries](deployment/registries/overview.md)
+- 🚀 [Platform Deployment](deployment/platforms/overview.md)
+
+### Code Reference
+- 🤖 [Agent](reference/agent/chat_agent_streaming)
+- 🔌 [API Reference](reference/api.md)
+- 🧠 [Model Configuration](model-configuration.md)
+- 🛠️ [Tools System](reference/tools/index.md)
+- 📊 [Data Models](reference/data_models.md)
+- 🗄️ [Database Integration](reference/database.md)
+
+---
+
+
 ## System Architecture
 
 ```mermaid
@@ -126,51 +298,6 @@ stateDiagram-v2
     end note
 ```
 
----
-
-## Key Features
-- **Configurable AI Agent**: Modify settings to match your specific requirements
-- **FastAPI-based API**: RESTful API with streaming support
-- **Tool Integration**: Execute Python functions and REST API calls
-- **Container Ready**: Deploy anywhere with Docker/Podman support
-- **IBM AI Integration**: Optimized for watsonx.ai and other IBM services
-
----
-
-## Quick Start Guide
-
-### 1. Local Development
-Start developing with Flexo locally:
-
-- ⚡ [Quick Setup Guide](getting-started.md)
-- 🔧 [Configure Your Agent](agent-configuration.md)
-- 📖 [Build from Source](deployment/building-image.md)
-- 🚀 [Run the Server](getting-started.md)
-
-### 2. Production Deployment
-Deploy Flexo to your preferred platform:
-
-| Platform | Best For | Guide |
-|----------|----------|-------|
-| IBM Code Engine | Serverless, pay-per-use | [Deploy →](deployment/platforms/code-engine.md) |
-| AWS Fargate | AWS integration | [Deploy →](deployment/platforms/fargate.md) |
-| OpenShift | Enterprise, hybrid cloud | [Deploy →](deployment/platforms/openshift.md) |
-| Kubernetes | Custom infrastructure | [Deploy →](deployment/platforms/kubernetes.md) |
-
----
-
-## Documentation
-
-### Deployment Guides
-- 📦 [Container Registries](deployment/registries/overview.md)
-- 🚀 [Platform Deployment](deployment/platforms/overview.md)
-
-### Code Reference
-- 🤖 [Agent](reference/agent/chat_agent_streaming)
-- 🔌 [API Reference](reference/api.md)
-- 🛠️ [Tools System](reference/tools/index.md)
-- 📊 [Data Models](reference/data_models.md)
-- 🗄️ [Database Integration](reference/database.md)
 
 ---
 

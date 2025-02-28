@@ -35,17 +35,17 @@ system_prompt: |
   actionable responses.
 
 # Core behavior settings
-detection_mode: manual                # Options: manual, vendor
-use_vendor_chat_completions: false    # Options: true, false
+detection_mode: vendor               # Options: manual, vendor
+use_vendor_chat_completions: true    # Options: true, false
 
 # Model Configuration
 models_config:
   main_chat_model:
     # WatsonX Configuration
-    vendor: watsonx-llama # Options: watsonx-llama/granite/mistral, openai, anthropic, mistral-ai
-    model_id: meta-llama/llama-3-405b-instruct # Other options: mistralai/mistral-large, meta-llama/llama-3-405b-instruct, ibm/granite-3-8b-instruct
-    decoding_method: greedy
-    max_new_tokens: 4000
+#    vendor: watsonx-llama # Options: watsonx-llama/granite/mistral, openai, anthropic, mistral-ai
+#    model_id: meta-llama/llama-3-405b-instruct # Other options: mistralai/mistral-large, meta-llama/llama-3-405b-instruct, ibm/granite-3-8b-instruct
+#    decoding_method: greedy
+#    max_new_tokens: 4000
 
     # Alternative OpenAI Configuration (uncomment to use)
 #     vendor: openai
@@ -58,6 +58,12 @@ models_config:
 #     model_id: claude-3-5-sonnet-latest
 #     max_tokens: 4000
 #     temperature: 0.7
+
+     # Alternative xAI grok Configuration (uncomment to use)
+      vendor: xai
+      model_id: grok-2-latest
+      temperature: 0.7
+      max_tokens: 2000
 
      # Alternative vLLM Configuration (uncomment to use)
 #     vendor: openai-compat-llama

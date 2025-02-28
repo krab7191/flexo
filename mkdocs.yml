@@ -26,7 +26,8 @@ nav:
       - Overview: deployment/registries/overview.md
       - DockerHub: deployment/registries/dockerhub.md
       - IBM Registry: deployment/registries/ibm-registry.md
-  - Configuration: agent-configuration.md
+  - Agent Configuration: agent-configuration.md
+  - Model Configuration: model-configuration.md
   - REST API: api.md
   - Code Reference:
     - Overview: reference/index.md
