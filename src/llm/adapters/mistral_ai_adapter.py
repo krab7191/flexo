@@ -1,8 +1,11 @@
+# src/llm/adapters/mistral_ai_adapter.py
+
 import os
+import json
 import logging
 from datetime import datetime
 from mistralai import Mistral
-from typing import AsyncGenerator, List, Optional, Any
+from typing import AsyncGenerator, List, Optional
 
 from src.data_models.tools import Tool
 from src.llm.adapters import BaseVendorAdapter
@@ -115,122 +118,95 @@ class MistralAIAdapter(BaseVendorAdapter):
             logger.error(f"Error in Mistral streaming: {str(e)}", exc_info=True)
             raise RuntimeError(f"Mistral API streaming failed: {str(e)}") from e
 
-    def _is_unset(self, value: Any) -> bool:
-        """Check if a value is an Unset instance from Mistral's API.
-
-        Args:
-            value: Any value to check
-
-        Returns:
-            bool: True if the value is an Unset instance, False otherwise
-        """
-        # Check for the Unset class without using direct comparison
-        # This handles cases where the value is an instance of Unset class
-        return (
-                value is not None and
-                hasattr(value, '__class__') and
-                value.__class__.__name__ == 'Unset'
-        )
-
-    def _safe_get_attr(self, obj: Any, attr_name: str, default: Any = None) -> Any:
-        """Safely get an attribute value, handling Unset instances.
-
-        Args:
-            `obj`: Object to get attribute from
-            `attr_name`: Name of the attribute
-            `default`: Default value if attribute is missing or Unset
-
-        Returns:
-            The attribute value or default
-        """
-        if obj is None:
-            return default
-
-        value = getattr(obj, attr_name, default)
-        return default if self._is_unset(value) else value
-
     async def _convert_to_sse_chunk(self, raw_chunk) -> SSEChunk:
         """Convert Mistral's response chunk to standardized SSE format.
 
-        Transforms Mistral's response objects into the application's
-        standardized SSEChunk format, handling all possible response fields
-        including tool calls, content, and metadata.
+        Uses model_dump_json() to convert Mistral's response to a clean JSON representation,
+        then constructs an SSEChunk from the parsed data.
 
         Args:
-            `raw_chunk`: Raw chunk from Mistral's API, could be CompletionChunk or CompletionEvent.
+            raw_chunk: Raw chunk from Mistral's API, could be CompletionChunk or CompletionEvent.
 
         Returns:
-            `SSEChunk`: Standardized chunk format for consistent handling.
+            SSEChunk: Standardized chunk format for consistent handling.
 
         Raises:
-            `ValueError`: If chunk conversion fails due to unexpected format.
+            ValueError: If chunk conversion fails due to unexpected format.
         """
         try:
-            # Check if this is a CompletionEvent with data attribute (mistralai client wraps responses)
-            chunk_data = getattr(raw_chunk, 'data', raw_chunk)
+            # Use model_dump_json() to get a clean JSON representation where Unset values are omitted
+            chunk_json = raw_chunk.model_dump_json()
+            chunk_data = json.loads(chunk_json)
 
-            # Get chunk ID with fallback
-            chunk_id = self._safe_get_attr(chunk_data, 'id', f"gen-{id(chunk_data)}")
-            logger.debug(f"Converting chunk ID: {chunk_id}")
+            # Extract the 'data' field if present (based on the provided example)
+            if 'data' in chunk_data:
+                chunk_data = chunk_data['data']
 
+            logger.debug(f"Converting chunk ID: {chunk_data.get('id', 'unknown')}")
+
+            # Process choices
             choices = []
-            chunk_choices = self._safe_get_attr(chunk_data, 'choices', [])
+            for choice_data in chunk_data.get('choices', []):
+                delta_data = choice_data.get('delta', {})
 
-            for choice in chunk_choices:
-                # Extract delta from choice
-                delta = self._safe_get_attr(choice, 'delta')
-
-                # Handle tool calls if present
+                # Process tool calls if present
                 tool_calls = None
-                delta_tool_calls = self._safe_get_attr(delta, 'tool_calls')
-
-                if delta_tool_calls and not self._is_unset(delta_tool_calls):
+                if 'tool_calls' in delta_data:
                     tool_calls = []
-                    for tc in delta_tool_calls:
-                        # Process function within tool call
-                        tc_function = self._safe_get_attr(tc, 'function')
+                    for tc_data in delta_data['tool_calls']:
                         function = None
+                        if 'function' in tc_data:
+                            # Ensure name and arguments are valid strings, defaulting to empty strings if missing or None
+                            fn_name = tc_data['function'].get('name')
+                            fn_name = '' if fn_name is None else fn_name
 
-                        if tc_function:
+                            fn_args = tc_data['function'].get('arguments')
+                            fn_args = '' if fn_args is None else fn_args
+
                             function = SSEFunction(
-                                name=self._safe_get_attr(tc_function, 'name', ""),
-                                arguments=self._safe_get_attr(tc_function, 'arguments', "")
+                                name=fn_name,
+                                arguments=fn_args
                             )
 
+                        # Ensure type is always a string, defaulting to 'function' if missing or None
+                        tool_call_type = tc_data.get('type')
+                        if tool_call_type is None:
+                            tool_call_type = 'function'
+
                         tool_calls.append(SSEToolCall(
-                            index=self._safe_get_attr(tc, 'index', 0),
-                            id=self._safe_get_attr(tc, 'id'),
-                            type="function",  # Default to function if not specified
+                            index=tc_data.get('index', 0),
+                            id=tc_data.get('id'),
+                            type=tool_call_type,
                             function=function
                         ))
 
-                # Create delta safely
-                sse_delta = SSEDelta(
-                    role=self._safe_get_attr(delta, 'role'),
-                    content=self._safe_get_attr(delta, 'content'),
+                # Create delta
+                delta = SSEDelta(
+                    role=delta_data.get('role'),
+                    content=delta_data.get('content'),
                     tool_calls=tool_calls,
-                    refusal=self._safe_get_attr(delta, 'refusal')
+                    refusal=delta_data.get('refusal')
                 )
 
                 # Create choice
                 choices.append(SSEChoice(
-                    index=self._safe_get_attr(choice, 'index', 0),
-                    delta=sse_delta,
-                    logprobs=self._safe_get_attr(choice, 'logprobs'),
-                    finish_reason=self._safe_get_attr(choice, 'finish_reason')
+                    index=choice_data.get('index', 0),
+                    delta=delta,
+                    logprobs=choice_data.get('logprobs'),
+                    finish_reason=choice_data.get('finish_reason')
                 ))
 
-            # Build and return the final SSEChunk
+            # Create and return the SSEChunk
             return SSEChunk(
-                id=chunk_id,
-                object=self._safe_get_attr(chunk_data, 'object', 'chat.completion.chunk'),
-                created=self._safe_get_attr(chunk_data, 'created', int(datetime.now().timestamp())),
-                model=self._safe_get_attr(chunk_data, 'model', self.model_name),
+                id=chunk_data.get('id', f"gen-{id(chunk_data)}"),
+                object=chunk_data.get('object', 'chat.completion.chunk'),
+                created=chunk_data.get('created', int(datetime.now().timestamp())),
+                model=chunk_data.get('model', self.model_name),
                 service_tier=None,  # Default to None if not provided by Mistral
                 system_fingerprint=None,  # Default to None if not provided by Mistral
                 choices=choices
             )
 
         except Exception as e:
-            logger.error(f"Error converting Mistral chunk: {raw_chunk}", exc_info=True)
+            logger.error(f"Error converting Mistral chunk: {e}", exc_info=True)
             raise ValueError(f"Failed to convert Mistral response to SSEChunk: {str(e)}") from e
