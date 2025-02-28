@@ -11,7 +11,7 @@ from .adapters import (
     OpenAIAdapter,
     WatsonXAdapter,
     AnthropicAdapter,
-    MistralAdapter,
+    MistralAIAdapter,
     OpenAICompatAdapter,
     GrokAdapter,
 )
@@ -42,7 +42,7 @@ class LLMFactory:
     _adapter_registry: Dict[str, Type[BaseVendorAdapter]] = {
         "openai": OpenAIAdapter,
         "anthropic": AnthropicAdapter,
-        "mistral-ai": MistralAdapter,
+        "mistral-ai": MistralAIAdapter,
         "xai": GrokAdapter,
         "grok": GrokAdapter,
         "openai-compat": OpenAICompatAdapter,

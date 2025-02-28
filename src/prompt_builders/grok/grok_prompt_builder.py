@@ -149,11 +149,10 @@ class GrokPromptBuilder(BasePromptBuilder):
 
     @staticmethod
     def _load_config() -> Dict:
-        """Load the Grok-specific configuration from the prompt builders YAML file.
+        """Load the xAI-specific configuration from the prompt builders YAML file.
 
         Returns:
-            Dict: Configuration dictionary containing Grok-specific settings.
-            If no Grok-specific config is found, falls back to OpenAI config.
+            Dict: Configuration dictionary containing Mistral-specific settings.
 
         Raises:
             FileNotFoundError: If the config file doesn't exist.
@@ -162,8 +161,4 @@ class GrokPromptBuilder(BasePromptBuilder):
         config_path = Path("src/configs/prompt_builders.yaml")
         with config_path.open() as f:
             config = yaml.safe_load(f)
-            # First try to get Grok-specific config, fall back to OpenAI if needed
-            grok_config = config.get('grok')
-            if not grok_config:
-                return config.get('openai', {})
-            return grok_config
+            return config.get('grok', {})

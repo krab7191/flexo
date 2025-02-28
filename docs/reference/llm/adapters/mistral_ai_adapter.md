@@ -1,4 +1,4 @@
-::: src.llm.adapters.mistral_ai_adapter.MistralAdapter
+::: src.llm.adapters.mistral_ai_adapter.MistralAIAdapter
     options:
         show_root_heading: true
         show_source: true
