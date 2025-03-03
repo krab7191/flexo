@@ -24,6 +24,9 @@ PyYAML>=6.0.2
 json5>=0.10.0
 Jinja2>=3.1.4
 
+# For specific tool implementations
+beautifulsoup4~=4.13.3
+
 # Utilities
 tenacity~=9.0.0
 streamlit~=1.42.0

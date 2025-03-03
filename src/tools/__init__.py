@@ -1,1 +1,1 @@
-from src.tools.core.tool_registry import ToolRegistry
+from .core.tool_registry import ToolRegistry
