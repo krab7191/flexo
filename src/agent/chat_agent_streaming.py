@@ -121,7 +121,8 @@ class StreamingChatAgent:
         )
 
         # Initialize ToolRegistry
-        self.tool_registry = ToolRegistry(config=self.config.get("tools_config"))
+        self.tool_registry = ToolRegistry()
+        self.tool_registry.load_from_config(tool_configs=self.config.get("tools_config"))
 
     @handle_streaming_errors
     async def stream_step(

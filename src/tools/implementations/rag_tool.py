@@ -19,13 +19,11 @@ from typing import Optional, Dict
 from src.tools.core.base_tool import BaseTool
 from src.data_models.tools import ToolResponse
 from src.data_models.agent import StreamContext
-from src.tools.core.tool_registry import ToolRegistry
 from src.database import ElasticsearchClient, ElasticQueryBuilder
 
 
-# @ToolRegistry.register_tool()
 class RAGTool(BaseTool):
-    name = "rag_tool"
+    name = "medicare_search"
 
     def __init__(self, config: Optional[Dict] = None):
         super().__init__()

@@ -5,14 +5,12 @@ from typing import Optional, Any, Dict
 
 from src.data_models.tools import ToolResponse
 from src.data_models.agent import StreamContext
-from src.tools.core.tool_registry import ToolRegistry
 from src.utils.json_formatter import format_json_to_document
 from src.tools.core.base_rest_tool import BaseRESTTool, ResponseFormat
 
 
-@ToolRegistry.register_tool()
 class WeatherTool(BaseRESTTool):
-    name = "weather_tool"
+    name = "weather"
 
     def __init__(self, config: Optional[Dict] = None):
         super().__init__(config=config)

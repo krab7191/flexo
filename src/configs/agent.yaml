@@ -49,7 +49,7 @@ models_config:
 
     # Alternative OpenAI Configuration (uncomment to use)
      vendor: openai
-     model_id: gpt-4o
+     model_id: gpt-4o-mini
      max_tokens: 4000
      temperature: 0.7
 
@@ -89,16 +89,19 @@ models_config:
 # Tool Configurations
 tools_config:
   # Weather API Integration
-  weather_tool:
+  - name: "weather"
     endpoint_url: "https://api.openweathermap.org/data/2.5/weather"
     api_key_env: "OWM_API_KEY"
-  
-  # Wikipedia API Integration
-  wikipedia_tool:
+
+  # Wikipedia Summary Tool
+  - name: "wikipedia"
     endpoint_url: "https://{lang}.wikipedia.org/api/rest_v1/page/summary/{encoded_query}"
 
+  # DuckDuckGo Search Tool
+  - name: "duckduckgo_search"
+
   # RAG Tool with Elasticsearch (optional, not enabled by default)
-  rag_tool:
+  - name: "medicare_search"
     connector_config:
       connector_type: elasticsearch
       index_name: my_index

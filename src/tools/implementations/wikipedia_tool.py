@@ -5,14 +5,12 @@ from typing import Optional, Any, Dict
 
 from src.data_models.tools import ToolResponse
 from src.data_models.agent import StreamContext
-from src.tools.core.tool_registry import ToolRegistry
 from src.utils.json_formatter import format_json_to_document
 from src.tools.core.base_rest_tool import BaseRESTTool, ResponseFormat
 
 
-# @ToolRegistry.register_tool()
 class WikipediaTool(BaseRESTTool):
-    name = "wikipedia_tool"
+    name = "wikipedia"
 
     def __init__(self, config: Optional[Dict] = None):
         """

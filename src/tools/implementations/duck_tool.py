@@ -8,10 +8,8 @@ from typing import Optional, Dict
 from src.data_models.tools import ToolResponse
 from src.data_models.agent import StreamContext
 from src.tools.core.base_rest_tool import BaseRESTTool
-from src.tools.core.tool_registry import ToolRegistry
 
 
-@ToolRegistry.register_tool()
 class DuckDuckGoSearchTool(BaseRESTTool):
     """
     A tool for searching the web using DuckDuckGo.

@@ -117,7 +117,7 @@ Tools are registered using the `@ToolRegistry.register_tool()` decorator. Here's
      - Create a new Python file in the `implementations/` directory
      - Import required base classes and the registry decorator:
    ```python
-   from src.tools.core.tool_registry import ToolRegistry
+   from src.tools.core.utils.tool_registry import ToolRegistry
    from src.tools.core.base_tool import BaseTool  # or BaseRESTTool
    ```
 
@@ -147,18 +147,19 @@ Here's a complete example using the Weather Tool:
 
 ```python
 from typing import Optional, Dict
-from src.tools.core.tool_registry import ToolRegistry
+from src.tools.core.utils.tool_registry import ToolRegistry
 from src.tools.core.base_rest_tool import BaseRESTTool
+
 
 @ToolRegistry.register_tool()
 class WeatherTool(BaseRESTTool):
     name = "weather_tool"
-    
+
     def __init__(self, config: Optional[Dict] = None):
         super().__init__(config=config)
         self.description = 'Get current weather information for a location'
         self.strict = False
-        
+
     # Implement required methods...
 ```
 
