@@ -93,7 +93,7 @@ class RAGTool(BaseTool):
         if not query:
             raise ValueError("The 'query' parameter is required.")
 
-        self.logger.info("Executing RAG Tool with query about Medicare: %s", query)
+        self.logger.info("Executing RAG Tool with query about IT: %s", query)
 
         # Retrieve content from Elasticsearch
         retrieved_documents = await self._retrieve_content(
@@ -122,10 +122,10 @@ class RAGTool(BaseTool):
             RuntimeError: If retrieval fails.
             asyncio.TimeoutError: If query times out.
         """
-        self.logger.info("Querying Elasticsearch for Medicare handbook content")
+        self.logger.info("Querying Elasticsearch for NCAT IT content")
         top_k = top_k if top_k is not None else self.top_k
         query_body = self.query_builder.get_query(user_input)
-        self.logger.debug(f"Elastic query body for Medicare query: {json.dumps(query_body)}")
+        self.logger.debug(f"Elastic query body for IT query: {json.dumps(query_body)}")
         query_results = None
 
         # Perform Elasticsearch query with retries and timeout
@@ -202,7 +202,7 @@ class RAGTool(BaseTool):
             str: Formatted content with context header.
         """
         if not output:
-            return "No relevant information found in the Medicare & You 2025 handbook."
+            return "No relevant information found in the NCAT IT Data"
 
         # Return the output with a context header
         return (
@@ -213,6 +213,6 @@ class RAGTool(BaseTool):
 
     def get_tool_specific_instruction(self) -> str:
         return (
-            "This tool searches through the content of the 'Fix VPN ' "
-            "handbook. Please be concise and direct in your answers, basing them off of the retrieved content."
+            "This tool searches through the content of the NCAT IT information, it is meant to assist with tasks like 'how do I fix my vpn' \
+            handbook. Please be concise and direct in your answers, basing them off of the retrieved content."
         )
