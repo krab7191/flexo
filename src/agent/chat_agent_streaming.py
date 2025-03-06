@@ -98,9 +98,11 @@ class StreamingChatAgent:
         self.use_vendor_chat_completions = self.config.get("use_vendor_chat_completions", True)
 
         # Load parser config if needed for manual detection
-        self.logger.info(f" ---- IMPORTANT! ----\n\nMain Chat Model Config:\n{json.dumps(self.main_chat_model_config, indent=4)}\n")
-        self.logger.info(f" ---- IMPORTANT! ---- Tool Detection Mode: {self.detection_mode}")
-        self.logger.info(f" ---- IMPORTANT! ---- Vendor Chat API Mode: {self.use_vendor_chat_completions}")
+        self.logger.info("\n\n" + "=" * 60 + "\n" + "Agent Configuration Summary" + "\n" + "=" * 60 + "\n" +
+                         f"Main Chat Model Config:\n{json.dumps(self.main_chat_model_config, indent=4)}\n" +
+                         f"Tool Detection Mode: {self.detection_mode}\n" +
+                         f"Vendor Chat API Mode: {self.use_vendor_chat_completions}\n" +
+                         "\n" + "=" * 60 + "\n")
         if self.detection_mode == "manual":
             with open("src/configs/parsing.yaml", "r") as f:
                 parser_config = yaml.safe_load(f)

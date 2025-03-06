@@ -81,17 +81,25 @@ class ToolRegistry:
         """
         return self.hidden_tools.get(name)
 
-    def get_tool_definitions(self) -> List[Tool]:
-        """Get definitions for all registered non-hidden tools.
+    def get_tool_definitions(
+            self,
+            allowed: Optional[List[str]] = None,
+            disallowed: Optional[List[str]] = None
+    ) -> List[Tool]:
+        """
+        Get definitions for all registered non-hidden tools with optional filtering.
 
-        Returns:
-            List[Tool]: A list of tool definitions for all visible tools in the
-                registry
+        If 'allowed' is provided, only tools with names in the allowed list are returned.
+        If 'disallowed' is provided, tools with names in the disallowed list are omitted.
+        If both are None, all tools are returned.
         """
         tool_definitions = []
         for tool_name, tool in self.tools.items():
+            if allowed is not None and tool_name not in allowed:
+                continue
+            if disallowed is not None and tool_name in disallowed:
+                continue
             try:
-                # Extra validation to prevent runtime errors
                 if not hasattr(tool, 'name') or tool.name is None:
                     self.logger.error(f"Tool has missing or None name property: {tool.__class__.__name__}")
                     continue
@@ -116,7 +124,7 @@ class ToolRegistry:
             Exception: If there is an error creating a tool instance.
         """
         tool_count = len(tool_configs)
-        self.logger.info(f"\nStarting tool registration process for {tool_count} tool(s)...")
+        self.logger.info(f" Starting tool registration process for {tool_count} tool(s)...")
         self.logger.debug(f"Processing configuration: {tool_configs}")
 
         # Clear previous results if any
@@ -155,36 +163,35 @@ class ToolRegistry:
         failed_count = len(self.registration_results["failed"])
         total_count = successful_count + hidden_count + failed_count
 
-        # Create a header with divider
-        header = "\n\n" + "=" * 60 + "\n"
-        header += f"TOOL REGISTRATION SUMMARY ({total_count} TOTAL)\n"
-        header += "=" * 60
-        self.logger.info(header)
+        # Build the complete log message as a single string
+        log_message = "\n\n" + "=" * 60 + "\n"
+        log_message += f"TOOL REGISTRATION SUMMARY ({total_count} TOTAL)\n"
+        log_message += "=" * 60
 
         # Status section
-        status = f"\n  SUCCESS: {successful_count} public tool(s)"
+        log_message += f"\nSUCCESS: {successful_count} public tool(s)"
         if hidden_count > 0:
-            status += f", {hidden_count} hidden tool(s)"
+            log_message += f", {hidden_count} hidden tool(s)"
         if failed_count > 0:
-            status += f"\n  FAILED:  {failed_count} tool(s)"
-        self.logger.info(status)
+            log_message += f"\n  FAILED:  {failed_count} tool(s)"
 
         # Detailed sections
         if successful_count > 0:
-            self.logger.info("\nREGISTERED PUBLIC TOOLS:")
+            log_message += "\n\nREGISTERED PUBLIC TOOLS:"
             for i, name in enumerate(sorted(self.registration_results["successful"]), 1):
-                self.logger.info(f"  {i}. {name}")
+                log_message += f"\n  {i}. {name}"
 
         if hidden_count > 0:
-            self.logger.info("\nREGISTERED HIDDEN TOOLS:")
+            log_message += "\n\nREGISTERED HIDDEN TOOLS:"
             for i, name in enumerate(sorted(self.registration_results["hidden_successful"]), 1):
-                self.logger.info(f"  {i}. {name}")
+                log_message += f"\n  {i}. {name}"
 
         if failed_count > 0:
-            self.logger.info("\nFAILED REGISTRATIONS:")
+            log_message += "\n\nFAILED REGISTRATIONS:"
             for i, (name, error) in enumerate(self.registration_results["failed"], 1):
-                self.logger.info(f"  {i}. {name}")
-                self.logger.info(f"     Error: {error}")
+                log_message += f"\n  {i}. {name}"
+                log_message += f"\n     Error: {error}"
 
-        # Final divider
-        self.logger.info("\n" + "=" * 60 + "\n")
+        log_message += "\n\n" + "=" * 60 + "\n"
+
+        self.logger.info(log_message)

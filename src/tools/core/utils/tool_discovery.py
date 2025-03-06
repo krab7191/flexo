@@ -47,25 +47,26 @@ def discover_custom_tools() -> Dict[str, Type[BaseTool]]:
                 discovered[tool_key] = attr
                 logger.debug(f"Discovered tool: '{tool_key}' -> {attr.__name__}")
 
-    # Log summary of discovery process with improved formatting
+    # Build a single log message for the summary
     if discovered:
         discovered_count = len(discovered)
         tool_names = sorted(discovered.keys())
 
-        header = "\n" + "-" * 50
-        header += f"\nTOOL DISCOVERY: Found {discovered_count} custom tool(s)"
-        header += "\n" + "-" * 50
-        logger.info(header)
+        log_message = "\n" + "-" * 50
+        log_message += f"\nTOOL DISCOVERY: Found {discovered_count} custom tool(s)"
+        log_message += "\n" + "-" * 50
 
         # List discovered tools with their class names
         for i, tool_name in enumerate(tool_names, 1):
             tool_class = discovered[tool_name].__name__
-            logger.info(f"  {i}. {tool_name:<20} -> {tool_class}")
+            log_message += f"\n  {i}. {tool_name:<20} -> {tool_class}"
 
-        logger.info("-" * 50)
+        log_message += f"\n{'-' * 50}"
     else:
-        logger.info("\n" + "-" * 50)
-        logger.info("TOOL DISCOVERY: No custom tools found")
-        logger.info("-" * 50)
+        log_message = "\n" + "-" * 50
+        log_message += "\nTOOL DISCOVERY: No custom tools found"
+        log_message += f"\n{'-' * 50}"
+
+    logger.debug(log_message)
 
     return discovered
