@@ -9,6 +9,7 @@ from src.utils.json_formatter import format_json_to_document
 from src.tools.core.base_rest_tool import BaseRESTTool, ResponseFormat
 
 
+# @ToolRegistry.register_tool()
 class WeatherTool(BaseRESTTool):
     name = "weather"
 
