@@ -31,7 +31,7 @@ class ContextModel(BaseModel):
 
     Note: This model is used to define a structure for exposing in the API for allowing additional context to be passed through the system. The keys and values are used to create a dictionary which is passed to the streaming agent and anything downstream.
     """
-    values: List[ContextValue]
+    values: Optional[List[ContextValue]] = Field(None, description="Additional context values (e.g. for API tools)")
 
 
 class ChatCompletionRequest(BaseModel):
