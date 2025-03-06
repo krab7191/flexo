@@ -23,7 +23,7 @@ from src.tools.core.tool_registry import ToolRegistry
 from src.database import ElasticsearchClient, ElasticQueryBuilder
 
 
-# @ToolRegistry.register_tool()
+@ToolRegistry.register_tool()
 class RAGTool(BaseTool):
     name = "rag_tool"
 
@@ -32,18 +32,15 @@ class RAGTool(BaseTool):
         self.config = config or {}
         self.strict = True
 
-        self.description = ("Tool used to retrieve information from the 'Medicare & You 2025' handbook "
-                            "using natural language search. Use this tool when you need information about "
-                            "Medicare coverage, enrollment, costs, and benefits.")
+        self.description = ("Tool for helping with IT tasks")
 
         self.parameters = {
             'type': 'object',
             'properties': {
                 'query': {
                     'type': 'string',
-                    'description': ('Search terms related to Medicare coverage, benefits, enrollment, '
-                                    'costs, or other topics from the Medicare & You 2025 handbook. '
-                                    'Example: "Medicare Part B coverage limits" or "prescription drug plans"'),
+                    'description': ('Search related to helping NCA&T IT '
+                                    'Example: "How do I fix my VPN?"'),
                 }
             },
             'required': ['query'],
@@ -209,14 +206,13 @@ class RAGTool(BaseTool):
 
         # Return the output with a context header
         return (
-            "## Retrieved Content from 'Medicare & You 2025' Handbook ##\n\n"
+            "## Retrieved Content from How to fix VPN ##\n\n"
             f"{output}\n\n"
-            "Note: This content is retrieved directly from the Medicare & You 2025 handbook. "
-            "For the most up-to-date information, please visit Medicare.gov or call 1-800-MEDICARE."
+            "Note: This content is retreived directly from the NCA&T VDB"
         )
 
     def get_tool_specific_instruction(self) -> str:
         return (
-            "This tool searches through the content of the 'Medicare & You 2025' "
+            "This tool searches through the content of the 'Fix VPN ' "
             "handbook. Please be concise and direct in your answers, basing them off of the retrieved content."
         )

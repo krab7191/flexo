@@ -6,3 +6,5 @@
 *__pycache__
 sandbox.ipynb
 venv
+*.env.*
+openapi.json

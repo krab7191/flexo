@@ -4,7 +4,8 @@
 # Basic agent configuration
 name: flexo
 history_limit: 4
-max_streaming_iterations: 4 # Number of times the agent is allowed to return to streaming (e.g. after tools execution)
+logging_level: INFO
+max_streaming_iterations: 3 # Number of times the agent is allowed to return to streaming (e.g. after tools execution)
 
 # Response timeouts
 timeouts:
@@ -35,18 +36,32 @@ system_prompt: |
   actionable responses.
 
 # Core behavior settings
-detection_mode: manual                # Options: manual, vendor
-use_vendor_chat_completions: false    # Options: true, false
+detection_mode: manual              # Options: manual, vendor
+use_vendor_chat_completions: false  # Options: true, false
 
 # Model Configuration
 models_config:
   main_chat_model:
     # WatsonX Configuration
-    vendor: watsonx-llama # Options: watsonx-llama/granite/mistral, openai, anthropic, mistral-ai
+    vendor: watsonx-llama #watsonx-llama # Options: watsonx-llama/granite/mistral, openai, anthropic, mistral-ai
     model_id: meta-llama/llama-3-405b-instruct # Other options: mistralai/mistral-large, meta-llama/llama-3-405b-instruct, ibm/granite-3-8b-instruct
     decoding_method: greedy
     max_new_tokens: 4000
-
+  # web_scraper_model:
+  #   vendor: watsonx-llama # Options: watsonx-llama/granite/mistral, openai, anthropic, mistral-ai
+  #   model_id: meta-llama/llama-3-3-70b-instruct # Other options: mistralai/mistral-large, meta-llama/llama-3-405b-instruct, ibm/granite-3-8b-instruct
+  #   decoding_method: greedy
+  #   max_new_tokens: 4000
+  # summarizer_model:
+  #   vendor: watsonx-llama
+  #   model_id: meta-llama/llama-3-3-70b-instruct
+  #   decoding_method: greedy
+  #   max_new_tokens: 4000
+  # image_model:
+  #   vendor: watsonx-llama
+  #   model_id: meta-llama/llama-3-2-90b-vision-instruct
+  #   decoding_method: greedy
+  #   max_new_tokens: 4000
     # Alternative OpenAI Configuration (uncomment to use)
     # vendor: openai
     # model_id: gpt-4-mini
@@ -56,19 +71,19 @@ models_config:
 # Tool Configurations
 tools_config:
   # Weather API Integration
-  weather_tool:
-    endpoint_url: "https://api.openweathermap.org/data/2.5/weather"
-    api_key_env: "OWM_API_KEY"
+  # weather_tool:
+  #   endpoint_url: "https://api.openweathermap.org/data/2.5/weather"
+  #   api_key_env: "OWM_API_KEY"
   
   # Wikipedia API Integration
-  wikipedia_tool:
-    endpoint_url: "https://{lang}.wikipedia.org/api/rest_v1/page/summary/{encoded_query}"
+  # wikipedia_tool:
+  #   endpoint_url: "https://{lang}.wikipedia.org/api/rest_v1/page/summary/{encoded_query}"
 
   # RAG Tool with Elasticsearch (optional, not enabled by default)
   rag_tool:
     connector_config:
       connector_type: elasticsearch
-      index_name: my_index
+      index_name: search-cat
       api_key_env: ES_API_KEY
       endpoint_env: ES_ENDPOINT
       top_k: 5
@@ -95,3 +110,10 @@ tools_config:
         rank:
           rrf:
             rank_window_size: 40
+
+  # web_scrape_tool:
+  #   name: web_scraper
+  #   vendor: watsonx-llama # Options: watsonx-llama/granite/mistral, openai, anthropic, mistral-ai
+  #   model_id: meta-llama/llama-3-405b-instruct # Other options: mistralai/mistral-large, meta-llama/llama-3-405b-instruct, ibm/granite-3-8b-instruct
+  #   decoding_method: greedy
+  #   max_new_tokens: 4000
