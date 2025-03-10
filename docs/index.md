@@ -42,7 +42,7 @@ The [**Flexo Agent Library**](https://github.com/IBM/flexo) is a powerful and fl
         <p class="description">Enterprise AI solutions</p>
     </div>
     <div class="provider-card">
-        <img src="images/anthropic.png" width="70">
+        <img src="images/Anthropic.png" width="70">
         <p><strong>Anthropic</strong></p>
         <p class="description">Claude family models</p>
     </div>
