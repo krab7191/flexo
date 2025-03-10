@@ -1,4 +1,4 @@
-# tools/core/utils/tool_discovery.py
+# src/tools/core/utils/tool_discovery.py
 
 import pkgutil
 import inspect
@@ -14,8 +14,10 @@ logger = logging.getLogger(__name__)
 def discover_custom_tools() -> Dict[str, Type[BaseTool]]:
     """
     Scans the tools.implementations package to find all tool classes that:
+
       - Inherit from BaseTool (excluding BaseTool itself)
       - Have a class attribute `name` that uniquely identifies them.
+
     Returns:
       A dictionary mapping tool_name (str) to the tool class.
     """

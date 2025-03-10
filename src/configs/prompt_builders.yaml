@@ -32,7 +32,7 @@ mistralai:
     header: "You can use the following tools: {tools}. Current date: {date}"
     tool_instructions: 'Each tool call must contain "name" and "arguments". To use a tool, emit a function call in the following JSON format:\n<|tool_call|>[{\"name\": \"tool_name\", \"arguments\": {\"arg1\": \"value1\"}}]'
 
-grok:
+xai:
   system_prompt:
     header: "You can use the following tools: {tools}. Current date: {date}"
     tool_instructions: 'Each tool call must contain "name" and "arguments". To use a tool, emit a function call in the following JSON format:\n<|tool_call|>[{\"name\": \"tool_name\", \"arguments\": {\"arg1\": \"value1\"}}]'

@@ -1,4 +1,4 @@
-# tools/core/utils/tool_factory.py
+# src/tools/core/utils/tool_builder.py
 
 import logging
 import importlib
@@ -22,6 +22,7 @@ def create_tool_from_config(
 
     Parameters:
         tool_def (dict): A dictionary containing tool configuration. Expected keys:
+
             - "name": Unique identifier for this tool instance.
             - Optional: "base_tool": The key to determine the underlying tool type.
             - Optional: "class": Explicit class name to use.

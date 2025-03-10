@@ -59,7 +59,7 @@ models_config:
 #     max_tokens: 4000
 #     temperature: 0.7
 
-     # Alternative xAI grok Configuration (uncomment to use)
+     # Alternative xAI Configuration (uncomment to use)
 #      vendor: xai
 #      model_id: grok-2-latest
 #      temperature: 0.7
@@ -101,33 +101,33 @@ tools_config:
   - name: "duckduckgo_search"
 
   # RAG Tool with Elasticsearch (optional, not enabled by default)
-  - name: "medicare_search"
-    connector_config:
-      connector_type: elasticsearch
-      index_name: my_index
-      api_key_env: ES_API_KEY
-      endpoint_env: ES_ENDPOINT
-      top_k: 5
-      timeout: 30
-      max_retries: 3
-      query_body:
-        _source: false
-        fields: ["text"]
-        query:
-          bool:
-            must:
-              - match:
-                  text:
-                    query: "$USER_INPUT"
-                    boost: 3.5
-        knn:
-          field: vector
-          query_vector_builder:
-            text_embedding:
-              model_id: thenlper__gte-base
-              model_text: "$USER_INPUT"
-          k: 100
-          num_candidates: 150
-        rank:
-          rrf:
-            rank_window_size: 40
+#  - name: "medicare_search"
+#    connector_config:
+#      connector_type: elasticsearch
+#      index_name: my_index
+#      api_key_env: ES_API_KEY
+#      endpoint_env: ES_ENDPOINT
+#      top_k: 5
+#      timeout: 30
+#      max_retries: 3
+#      query_body:
+#        _source: false
+#        fields: ["text"]
+#        query:
+#          bool:
+#            must:
+#              - match:
+#                  text:
+#                    query: "$USER_INPUT"
+#                    boost: 3.5
+#        knn:
+#          field: vector
+#          query_vector_builder:
+#            text_embedding:
+#              model_id: thenlper__gte-base
+#              model_text: "$USER_INPUT"
+#          k: 100
+#          num_candidates: 150
+#        rank:
+#          rrf:
+#            rank_window_size: 40

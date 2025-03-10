@@ -16,6 +16,7 @@ The **Prompt Builders** module provides utilities for constructing prompts tailo
 - `GranitePromptBuilder`: Tailored for **WatsonX Granite** models.
 - `LlamaPromptBuilder`: Supports **WatsonX Llama** models.
 - `MistralPromptBuilder`: Specialized for **WatsonX Mistral** models.
+- `XAIPromptBuilder`: Specialized for **xAI** models.
 
 ### Prompt Models
 - `PromptPayload`: Defines the structure of the prompt content.
@@ -23,3 +24,5 @@ The **Prompt Builders** module provides utilities for constructing prompts tailo
 
 ### Using Different Providers
 Each builder follows a similar pattern but optimizes prompt formatting based on the model requirements.
+
+---

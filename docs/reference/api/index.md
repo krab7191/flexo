@@ -39,5 +39,5 @@ For detailed information about specific components, see:
 ## See Also
 
 - [Agent Configuration](../agent/index.md) - Configure the underlying agent
-- [Tool Registry](../tools/tool_registry.md) - Available tools and functions
+- [Tool Registry](../tools/core/tool_registry.md) - Available tools and functions
 - [LLM Factory](../llm/llm_factory.md) - LLM provider configuration

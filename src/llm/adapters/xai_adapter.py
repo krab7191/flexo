@@ -1,4 +1,4 @@
-# src/llm/adapters/grok_adapter.py
+# src/llm/adapters/xai_adapter.py
 
 import os
 import logging
@@ -13,17 +13,17 @@ from src.api.sse_models import SSEChunk, SSEChoice, SSEDelta, SSEToolCall, SSEFu
 logger = logging.getLogger(__name__)
 
 
-class GrokAdapter(BaseVendorAdapter):
-    """Adapter for interacting with X.AI's Grok API.
+class XAIAdapter(BaseVendorAdapter):
+    """Adapter for interacting with xAI's API.
 
-    Utilizes the OpenAI client for compatibility with Grok's API endpoints.
+    Utilizes the OpenAI client for compatibility with xAI API endpoints.
     Supports streaming responses and converts them to standardized SSE chunks.
 
     Attributes:
-        model_name (str): The model identifier being served (e.g., "grok-2-latest")
-        api_key (str): X.AI API key for authentication
-        base_url (str): URL of the X.AI API server
-        client (AsyncOpenAI): Configured OpenAI-compatible client for X.AI
+        model_name (str): The model identifier being served
+        api_key (str): xAI API key for authentication
+        base_url (str): URL of the xAI API server
+        client (AsyncOpenAI): Configured OpenAI-compatible client for xAI
     """
 
     def __init__(
@@ -33,12 +33,12 @@ class GrokAdapter(BaseVendorAdapter):
             api_key: str = None,
             **default_params
     ):
-        """Initialize the Grok adapter.
+        """Initialize the xAI adapter.
 
         Args:
-            model_name (str): Name of the Grok model to use (e.g., "grok-2-latest")
-            base_url (str): URL of the X.AI API server
-            api_key (str): X.AI API key for authentication
+            model_name (str): Name of the xAI model to use
+            base_url (str): URL of the xAI API server
+            api_key (str): xAI API key for authentication
             **default_params: Additional parameters for generation (temperature etc.)
         """
         self.model_name = model_name
@@ -47,7 +47,7 @@ class GrokAdapter(BaseVendorAdapter):
         # Get API key from environment or parameter
         self.api_key = api_key or os.getenv("XAI_API_KEY")
         if not self.api_key:
-            raise ValueError("X.AI API key is required. Provide as parameter or set XAI_API_KEY environment variable.")
+            raise ValueError("xAI API key is required. Provide as parameter or set `XAI_API_KEY` environment variable.")
 
         self.default_params = default_params
 
@@ -57,7 +57,7 @@ class GrokAdapter(BaseVendorAdapter):
             api_key=self.api_key
         )
 
-        logger.info(f"Initialized Grok adapter for model: {self.model_name}")
+        logger.info(f"Initialized xAI adapter for model: {self.model_name}")
         logger.debug(f"Using X.AI server at: {self.base_url}")
         logger.debug(f"Default parameters: {default_params}")
 
@@ -69,7 +69,7 @@ class GrokAdapter(BaseVendorAdapter):
     ) -> AsyncGenerator[SSEChunk, None]:
         """Generate streaming chat completion.
 
-        Uses Grok's chat completions endpoint with streaming enabled.
+        Uses xAI's chat completions endpoint with streaming enabled.
 
         Args:
             messages (List[TextChatMessage]): List of chat messages
@@ -102,8 +102,8 @@ class GrokAdapter(BaseVendorAdapter):
                 yield self._convert_to_sse_chunk(chunk)
 
         except Exception as e:
-            logger.error(f"Error in Grok chat stream: {str(e)}", exc_info=True)
-            raise RuntimeError(f"Grok chat completion failed: {str(e)}") from e
+            logger.error(f"Error in xAI chat stream: {str(e)}", exc_info=True)
+            raise RuntimeError(f"xAI chat completion failed: {str(e)}") from e
 
     async def gen_sse_stream(
             self,
@@ -112,7 +112,7 @@ class GrokAdapter(BaseVendorAdapter):
     ) -> AsyncGenerator[SSEChunk, None]:
         """Generate streaming completion from a text prompt.
 
-        For Grok, this simply converts the text prompt to a chat message and calls gen_chat_sse_stream.
+        For xAI, this simply converts the text prompt to a chat message and calls gen_chat_sse_stream.
 
         Args:
             prompt (str): Input text prompt
@@ -129,10 +129,10 @@ class GrokAdapter(BaseVendorAdapter):
             yield chunk
 
     def _convert_to_sse_chunk(self, raw_chunk) -> SSEChunk:
-        """Convert Grok API response chunk to standardized SSE format.
+        """Convert xAI API response chunk to standardized SSE format.
 
         Args:
-            raw_chunk: Raw chunk from Grok API
+            raw_chunk: Raw chunk from xAI API
 
         Returns:
             SSEChunk: Standardized chunk format
@@ -180,5 +180,5 @@ class GrokAdapter(BaseVendorAdapter):
             )
 
         except Exception as e:
-            logger.error(f"Error converting Grok chunk: {raw_chunk}", exc_info=True)
-            raise ValueError(f"Failed to convert Grok response: {str(e)}") from e
+            logger.error(f"Error converting xAI chunk: {raw_chunk}", exc_info=True)
+            raise ValueError(f"Failed to convert xAI response: {str(e)}") from e

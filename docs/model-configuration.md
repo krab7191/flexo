@@ -38,39 +38,39 @@ Each model entry consists of:
 
 ### Cloud Providers
 
-| Provider | Vendor Key | API Endpoints | Environment Variables |
-|----------|------------|--------------|----------------------|
-| OpenAI | `openai` | `/chat/completions` | `OPENAI_API_KEY` |
-| Anthropic | `anthropic` | `/messages` | `ANTHROPIC_API_KEY` |
-| X.AI | `xai` or `grok` | `/chat/completions` | `XAI_API_KEY` |
-| Mistral AI | `mistral-ai` | `/chat/completions` | `MISTRAL_API_KEY` |
+| Provider    | Vendor Key | API Endpoints | Environment Variables |
+|-------------|-----------|--------------|----------------------|
+| OpenAI      | `openai` | `/chat/completions` | `OPENAI_API_KEY` |
+| Anthropic   | `anthropic` | `/messages` | `ANTHROPIC_API_KEY` |
+| xAI         | `xai` | `/chat/completions` | `XAI_API_KEY` |
+| Mistral AI  | `mistral-ai` | `/chat/completions` | `MISTRAL_API_KEY` |
 | IBM WatsonX | `watsonx-llama`, `watsonx-granite`, `watsonx-mistral` | `/text/chat_stream`, `/text/generation_stream` | `WATSONX_API_KEY`, `WATSONX_PROJECT_ID` |
 
 ### Self-Hosted Options
 
 The `openai-compat` adapter types support any API that implements OpenAI-compatible endpoints:
 
-| Implementation | Vendor Key | Default Base URL | Notes |
-|----------------|------------|-----------------|-------|
-| vLLM | `openai-compat` | `http://localhost:8000/v1` | High-performance inference server |
-| Ollama | `openai-compat` | `http://localhost:11434/v1` | Easy model management |
-| LLaMA.cpp | `openai-compat` | `http://localhost:8080/v1` | Efficient CPU/GPU inference |
-| LM Studio | `openai-compat` | `http://localhost:1234/v1` | Desktop GUI for model running |
-| LocalAI | `openai-compat` | `http://localhost:8080/v1` | Self-hosted alternative |
-| Text Generation WebUI | `openai-compat` | `http://localhost:5000/v1` | Feature-rich UI with API |
+| Implementation | Vendor Key | Default Base URL |
+|----------------|------------|-----------------|
+| vLLM | `openai-compat` | `http://localhost:8000/v1` |
+| Ollama | `openai-compat` | `http://localhost:11434/v1` |
+| LLaMA.cpp | `openai-compat` | `http://localhost:8080/v1` |
+| LM Studio | `openai-compat` | `http://localhost:1234/v1` |
+| LocalAI | `openai-compat` | `http://localhost:8080/v1` |
+| Text Generation WebUI | `openai-compat` | `http://localhost:5000/v1` |
 
 ## Configuration Parameters
 
 ### Common Parameters
 
-| Parameter | Type | Description | Default | Providers |
-|-----------|------|-------------|---------|-----------|
-| `model_id` | string | Identifier for the specific model to use | Required | All |
-| `vendor` | string | Provider identifier (see tables above) | Required | All |
-| `temperature` | float | Controls randomness in generation (0.0-1.0) | 0.7 | All |
-| `max_tokens` | integer | Maximum tokens to generate | 1024 | All |
-| `top_p` | float | Alternative to temperature for nucleus sampling (0.0-1.0) | 1.0 | All |
-| `stop` | array | Sequences that will stop generation when produced | `[]` | All |
+| Parameter | Type | Description | Default |
+|-----------|------|-------------|---------|
+| `model_id` | string | Identifier for the specific model to use | Required |
+| `vendor` | string | Provider identifier (see tables above) | Required |
+| `temperature` | float | Controls randomness in generation (0.0-1.0) | 0.7 |
+| `max_tokens` | integer | Maximum tokens to generate | 1024 |
+| `top_p` | float | Alternative to temperature for nucleus sampling (0.0-1.0) | 1.0 |
+| `stop` | array | Sequences that will stop generation when produced | `[]` |
 
 ### Provider-Specific Parameters Examples
 
@@ -108,7 +108,7 @@ claude-35:
 |-----------|------|-------------|---------|
 | `top_k` | integer | Limits token selection to top K options | 50 |
 
-#### X.AI (Grok)
+#### xAI
 
 ```yaml
 grok-2:
@@ -124,7 +124,7 @@ grok-2:
 |-----------|------|-------------|---------|
 | `base_url` | string | API endpoint URL | `https://api.x.ai/v1` |
 
-#### IBM WatsonX
+#### IBM watsonX
 
 ```yaml
 granite-8b:
@@ -135,8 +135,9 @@ granite-8b:
   time_limit: 60  # watsonX-specific
 ```
 
-| Parameter | Type | Description                                | Default |
-| `time_limit` | integer | Maximum generation time in seconds         | 60 |
+| Parameter | Type | Description                        | Default |
+|-----------|------|------------------------------------|---------|
+| `time_limit` | integer | Maximum generation time in seconds | 60 |
 
 #### Mistral AI
 
@@ -174,13 +175,13 @@ local-model:
 
 The following environment variables are used for API authentication:
 
-| Provider | Environment Variable | Required |
-|----------|---------------------|----------|
-| OpenAI | `OPENAI_API_KEY` | Yes |
-| Anthropic | `ANTHROPIC_API_KEY` | Yes |
-| X.AI | `XAI_API_KEY` | Yes |
-| Mistral AI | `MISTRAL_API_KEY` | Yes |
-| IBM WatsonX | `WATSONX_API_KEY`, `WATSONX_PROJECT_ID` | Yes |
+| Provider          | Environment Variable | Required |
+|-------------------|---------------------|----------|
+| OpenAI            | `OPENAI_API_KEY` | Yes |
+| Anthropic         | `ANTHROPIC_API_KEY` | Yes |
+| xAI               | `XAI_API_KEY` | Yes |
+| Mistral AI        | `MISTRAL_API_KEY` | Yes |
+| IBM WatsonX       | `WATSONX_API_KEY`, `WATSONX_PROJECT_ID` | Yes |
 | OpenAI-Compatible | Varies (can be set in config) | Depends |
 
 ## Model Selection in Agent Configuration
@@ -216,17 +217,17 @@ models_config:
 
 Flexo automatically selects the appropriate prompt builder based on the vendor:
 
-| Vendor | Prompt Builder Link                                                                                    |
-|-------|--------------------------------------------------------------------------------------------------------|
-| `openai` | [`OpenAIPromptBuilder`](reference/prompt_builders/openai_prompt_builder.md)                            |
-| `anthropic` | [`AnthropicPromptBuilder`](reference/prompt_builders/anthropic_prompt_builder.md)                      |
-| `mistral-ai` | [`MistralAIPromptBuilder` ](reference/prompt_builders/mistral_ai_prompt_builder.md)                    |
-| `watsonx-granite` | [`WatsonXGranitePromptBuilder`](reference/prompt_builders/watsonx/granite/granite_prompt_builder.md)   |
-| `watsonx-llama` | [`WatsonXLlamaPromptBuilder`](reference/prompt_builders/watsonx/llama/llama_prompt_builder.md)         |
-| `watsonx-mistral` | [`WatsonXMistralPromptBuilder`](reference/prompt_builders/watsonx/mistral/mistral_prompt_builder.md)   |
+| Vendor | Prompt Builder Link                                                                                     |
+|-------|---------------------------------------------------------------------------------------------------------|
+| `openai` | [`OpenAIPromptBuilder`](reference/prompt_builders/openai_prompt_builder.md)                             |
+| `anthropic` | [`AnthropicPromptBuilder`](reference/prompt_builders/anthropic_prompt_builder.md)                       |
+| `mistral-ai` | [`MistralAIPromptBuilder` ](reference/prompt_builders/mistral_ai_prompt_builder.md)                     |
+| `watsonx-granite` | [`WatsonXGranitePromptBuilder`](reference/prompt_builders/watsonx/granite/granite_prompt_builder.md)    |
+| `watsonx-llama` | [`WatsonXLlamaPromptBuilder`](reference/prompt_builders/watsonx/llama/llama_prompt_builder.md)          |
+| `watsonx-mistral` | [`WatsonXMistralPromptBuilder`](reference/prompt_builders/watsonx/mistral/mistral_prompt_builder.md)    |
 | `openai-compat-granite` | [`OpenAICompatGranitePromptBuilder`](reference/prompt_builders/openai_compat/granite_prompt_builder.md) |
-| `openai-compat-llama` | [`OpenAICompatLlamaPromptBuilder`](reference/prompt_builders/openai_compat/llama_prompt_builder.md)    |
-| `xai` | [`GrokPromptBuilder`](reference/prompt_builders/grok_prompt_builder.md)                                |
+| `openai-compat-llama` | [`OpenAICompatLlamaPromptBuilder`](reference/prompt_builders/openai_compat/llama_prompt_builder.md)     |
+| `xai` | [`XAIPromptBuilder`](reference/prompt_builders/xai_prompt_builder.md)                                   |
 
 ### Tool Detection Modes
 
@@ -267,7 +268,7 @@ claude:
   top_p: 0.9
 ```
 
-### X.AI Grok
+### xAI
 
 ```yaml
 grok:

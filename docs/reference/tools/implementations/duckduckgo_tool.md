@@ -1,4 +1,4 @@
-::: src.tools.core.utils.tool_registry.ToolRegistry
+::: src.tools.implementations.duck_tool.DuckDuckGoSearchTool
     options:
         show_root_heading: true
         show_source: true

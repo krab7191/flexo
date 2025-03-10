@@ -15,5 +15,4 @@ The **WatsonX Adapters Module** provides integration with IBM’s WatsonX AI ser
 ### Authentication Handling
 - **`IBMTokenManager`** - Manages authentication and token retrieval for accessing WatsonX services.
 
-## Additional Resources
-- [LLM Adapters](../index.md)
+---

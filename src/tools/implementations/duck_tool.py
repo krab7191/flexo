@@ -1,4 +1,4 @@
-# src/tools/core/base_rest_tool.py
+# src/tools/implementations/duck_tool.py
 
 import re
 from bs4 import BeautifulSoup

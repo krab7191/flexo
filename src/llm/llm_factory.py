@@ -13,7 +13,7 @@ from .adapters import (
     AnthropicAdapter,
     MistralAIAdapter,
     OpenAICompatAdapter,
-    GrokAdapter,
+    XAIAdapter,
 )
 
 logger = logging.getLogger(__name__)
@@ -43,8 +43,7 @@ class LLMFactory:
         "openai": OpenAIAdapter,
         "anthropic": AnthropicAdapter,
         "mistral-ai": MistralAIAdapter,
-        "xai": GrokAdapter,
-        "grok": GrokAdapter,
+        "xai": XAIAdapter,
         "openai-compat": OpenAICompatAdapter,
     }
 
@@ -149,8 +148,8 @@ class LLMFactory:
                 **kwargs
             )
 
-        # Handle special case for X.AI/Grok
-        if vendor in ["xai", "grok"]:
+        # Handle case for xAI
+        if vendor == "xai":
             # Get API key from config or environment
             api_key = kwargs.pop("api_key", None) or os.getenv("XAI_API_KEY")
             if not api_key:
@@ -159,7 +158,7 @@ class LLMFactory:
             # Use the standard X.AI base URL unless overridden
             base_url = kwargs.pop("base_url", "https://api.x.ai/v1")
 
-            return GrokAdapter(
+            return XAIAdapter(
                 model_name=model_id,
                 api_key=api_key,
                 base_url=base_url,

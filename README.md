@@ -95,22 +95,22 @@ For detailed configuration including environment variables, API keys, and base U
 ## Documentation
 
 ### Getting Started
-- 📚 [Documentation](https://ibm.github.io/flexo/)
-- ⚡ [Quick Setup Guide](https://ibm.github.io/flexo/getting-started/)
-- 🔧 [Agent Configuration](https://ibm.github.io/flexo/agent-configuration/)
-- 📖 [Building from Source](https://ibm.github.io/flexo/deployment/overview/)
-- 🚀 [API Reference](https://ibm.github.io/flexo/api/)
+- [Documentation](https://ibm.github.io/flexo/)
+- [Quick Setup Guide](https://ibm.github.io/flexo/getting-started/)
+- [Agent Configuration](https://ibm.github.io/flexo/agent-configuration/)
+- [Building from Source](https://ibm.github.io/flexo/deployment/overview/)
+- [API Reference](https://ibm.github.io/flexo/api/)
 
 ### Reference Documentation
-- 🤖 [Agent System](https://ibm.github.io/flexo/reference/agent/)
-- 🛠️ [Tools Overview](https://ibm.github.io/flexo/reference/tools/)
-- 📊 [Data Models](https://ibm.github.io/flexo/reference/data_models/)
-- 🗄️ [Database Integration](https://ibm.github.io/flexo/reference/database/)
+- [Agent System](https://ibm.github.io/flexo/reference/agent/)
+- [Tools Overview](https://ibm.github.io/flexo/reference/tools/)
+- [Data Models](https://ibm.github.io/flexo/reference/data_models/)
+- [Database Integration](https://ibm.github.io/flexo/reference/database/)
 
 ### Deployment Guides
-- 🏗️ [Building Images](https://ibm.github.io/flexo/deployment/building-image/)
-- 📦 [Container Registries](https://ibm.github.io/flexo/deployment/registries/overview/)
-- 🚀 [Platform Deployment](https://ibm.github.io/flexo/deployment/platforms/overview/)
+- [Building Images](https://ibm.github.io/flexo/deployment/building-image/)
+- [Container Registries](https://ibm.github.io/flexo/deployment/registries/overview/)
+- [Platform Deployment](https://ibm.github.io/flexo/deployment/platforms/overview/)
 
 ---
 
@@ -126,10 +126,10 @@ flexo/
 │   ├── database/         # Database adapters
 │   ├── llm/              # LLM components
 │   ├── prompt_builders/  # Core prompt generation
-│   ├── tools/                   # 🔧 Add your custom tools here!
+│   ├── tools/                   
 │   │   ├── core/                # Core tool components
-│   │   ├── implementations/     # Custom tool implementations
-│   │   └──notebooks/            # Jupyter notebooks for tool development
+│   │   ├── implementations/     # 🔧 Add your custom tools here!
+│   │   └──notebooks/            # Notebook(s) for tool development/testing
 │   ├── utils/            # Utils/shared code
 │   └── main.py           # App entry point
 └── ...
@@ -138,9 +138,9 @@ flexo/
 ---
 
 ## Support
-- 📚 [Documentation](https://ibm.github.io/flexo/)
-- 🐛 [Issue Tracker](../../issues)
-- 🤝 [Contributing](CONTRIBUTING.md)
+- [Documentation](https://ibm.github.io/flexo/)
+- [Issue Tracker](../../issues)
+- [Contributing](CONTRIBUTING.md)
 
 ## Versioning
 This project follows [Semantic Versioning](https://semver.org/). See [releases](../../releases) for version history.

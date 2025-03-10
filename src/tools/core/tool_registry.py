@@ -1,4 +1,4 @@
-# tools/core/utils/tool_registry.py
+# src/tools/core/tool_registry.py
 
 import logging
 from typing import Dict, Optional, List

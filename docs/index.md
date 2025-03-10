@@ -151,10 +151,9 @@ gpt-4o:
 ### 1. Local Development
 Start developing with Flexo locally:
 
-- ⚡ [Quick Setup Guide](getting-started.md)
-- 🔧 [Configure Your Agent](agent-configuration.md)
-- 📖 [Build from Source](deployment/building-image.md)
-- 🚀 [Run the Server](getting-started.md)
+- [Configure Your Agent](agent-configuration.md)
+- [Run the Server](getting-started.md)
+- [Build from Source](deployment/building-image.md)
 
 ### 2. Production Deployment
 Deploy Flexo to your preferred platform:
@@ -171,16 +170,16 @@ Deploy Flexo to your preferred platform:
 ## Documentation
 
 ### Deployment Guides
-- 📦 [Container Registries](deployment/registries/overview.md)
-- 🚀 [Platform Deployment](deployment/platforms/overview.md)
+- [Container Registries](deployment/registries/overview.md)
+- [Platform Deployment](deployment/platforms/overview.md)
 
 ### Code Reference
-- 🤖 [Agent](reference/agent/chat_agent_streaming)
-- 🔌 [API Reference](reference/api.md)
-- 🧠 [Model Configuration](model-configuration.md)
-- 🛠️ [Tools System](reference/tools/index.md)
-- 📊 [Data Models](reference/data_models.md)
-- 🗄️ [Database Integration](reference/database.md)
+- [Agent](reference/agent/chat_agent_streaming)
+- [API Reference](reference/api.md)
+- [Model Configuration](model-configuration.md)
+- [Tools System](reference/tools/index.md)
+- [Data Models](reference/data_models.md)
+- [Database Integration](reference/database.md)
 
 ---
 

@@ -1,4 +1,4 @@
-# src/prompt_builders/grok/grok_prompt_builder.py
+# src/prompt_builders/xai/xai_prompt_builder.py
 
 import yaml
 import logging
@@ -11,15 +11,15 @@ from src.data_models.chat_completions import SystemMessage
 from src.prompt_builders.prompt_models import PromptPayload, PromptBuilderOutput
 
 
-class GrokPromptBuilder(BasePromptBuilder):
-    """A prompt builder specialized for X.AI's Grok chat completion models.
+class XAIPromptBuilder(BasePromptBuilder):
+    """A prompt builder specialized for xAI's chat completion models.
 
-    This class handles the construction of prompts for Grok models, with special
+    This class handles the construction of prompts for xAI models, with special
     handling for tool definitions and system messages. It loads configuration from
     a YAML file and supports embedding tool information into the conversation history.
 
     The builder primarily supports chat completions, following OpenAI-compatible format
-    which aligns with Grok's API. Text completions are not supported.
+    which aligns with xAI's API. Text completions are not supported.
 
     Attributes:
         config (Dict): Configuration dictionary loaded from prompt_builders.yaml.
@@ -27,24 +27,24 @@ class GrokPromptBuilder(BasePromptBuilder):
 
     Example:
         ```python
-        builder = GrokPromptBuilder()
+        builder = XAIPromptBuilder()
         payload = PromptPayload(
             conversation_history=history,
             tool_definitions=tools
         )
         output = await builder.build_chat(payload)
-        # Use output.chat_messages with Grok API
+        # Use output.chat_messages with xAI API
         ```
     """
 
     def __init__(self):
-        """Initialize the Grok prompt builder.
+        """Initialize the xAI prompt builder.
 
         Loads configuration from the prompt_builders.yaml file and sets up logging.
         Raises FileNotFoundError if the config file is not found.
         """
         self.logger = logging.getLogger(self.__class__.__name__)
-        self.logger.debug("Initializing GrokPromptBuilder")
+        self.logger.debug("Initializing XAIPromptBuilder")
         super().__init__()
         self.config = self._load_config()
 
@@ -62,7 +62,7 @@ class GrokPromptBuilder(BasePromptBuilder):
 
         Returns:
             PromptBuilderOutput: Contains the modified chat messages ready for use
-                with Grok's chat completion API.
+                with xAI's chat completion API.
 
         Note:
             If the first message in history is a system message, tool information
@@ -135,7 +135,7 @@ class GrokPromptBuilder(BasePromptBuilder):
         return f"{header}\n\n{formatted_tools}\n\n{instructions}"
 
     async def build_text(self, context: Dict) -> str:
-        """Text completion is not supported for Grok models.
+        """Text completion is not supported for xAI models.
 
         Args:
             context (Dict): Unused context dictionary.
@@ -144,7 +144,7 @@ class GrokPromptBuilder(BasePromptBuilder):
             NotImplementedError: Always raised as this method is not supported.
         """
         raise NotImplementedError(
-            "Grok models use chat completions interface. Use build_chat() instead."
+            "xAI models use chat completions interface. Use build_chat() instead."
         )
 
     @staticmethod
@@ -161,4 +161,4 @@ class GrokPromptBuilder(BasePromptBuilder):
         config_path = Path("src/configs/prompt_builders.yaml")
         with config_path.open() as f:
             config = yaml.safe_load(f)
-            return config.get('grok', {})
+            return config.get('xai', {})

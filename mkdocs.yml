@@ -55,10 +55,12 @@ nav:
       - Overview: reference/llm/index.md
       - Factory: reference/llm/llm_factory.md
       - Adapters:
+        - Overview: reference/llm/adapters/index.md
         - Base Adapter: reference/llm/adapters/base_vendor_adapter.md
         - Anthropic: reference/llm/adapters/anthropic_adapter.md
         - MistralAI: reference/llm/adapters/mistral_ai_adapter.md
         - OpenAI: reference/llm/adapters/openai_adapter.md
+        - xAI: reference/llm/adapters/xai_adapter.md
         - WatsonX:
           - Overview: reference/llm/adapters/watsonx/index.md
           - Adapter: reference/llm/adapters/watsonx/watsonx_adapter.md
@@ -83,9 +85,10 @@ nav:
       - Overview: reference/prompt_builders/index.md
       - Base Builder: reference/prompt_builders/base_prompt_builder.md
       - Models: reference/prompt_builders/prompt_models.md
-      - Anthropic: reference/prompt_builders/anthropic/anthropic_prompt_builder.md
-      - MistralAI: reference/prompt_builders/mistral_ai/mistral_ai_prompt_builder.md
-      - OpenAI: reference/prompt_builders/openai/openai_prompt_builder.md
+      - Anthropic: reference/prompt_builders/anthropic_prompt_builder.md
+      - MistralAI: reference/prompt_builders/mistral_ai_prompt_builder.md
+      - OpenAI: reference/prompt_builders/openai_prompt_builder.md
+      - xAI: reference/prompt_builders/xai_prompt_builder.md
       - WatsonX:
         - Overview: reference/prompt_builders/watsonx/index.md
         - Granite: reference/prompt_builders/watsonx/granite/granite_prompt_builder.md
@@ -96,21 +99,25 @@ nav:
           - Llama: reference/prompt_builders/openai_compat/llama_prompt_builder.md
     - Tools:
       - Overview: reference/tools/index.md
-      - Base Tool: reference/tools/base_tool.md
-      - Base REST Tool: reference/tools/base_rest_tool.md
-      - Tool Registry: reference/tools/tool_registry.md
+      - Base Tool: reference/tools/core/base_tool.md
+      - Base REST Tool: reference/tools/core/base_rest_tool.md
+      - Tool Registry: reference/tools/core/tool_registry.md
+      - Core:
+          - Parsers:
+              - Overview: reference/tools/core/parsers/index.md
+              - Base Parser: reference/tools/core/parsers/base_tool_call_parser.md
+              - JSON Parser: reference/tools/core/parsers/json_tool_call_parser.md
+              - Non-JSON Parser: reference/tools/core/parsers/non_json_tool_call_parser.md
+          - Utils:
+              - Overview: reference/tools/core/utils/index.md
+              - Token Manager: reference/tools/core/utils/token_manager.md
+              - Tool Builder: reference/tools/core/utils/tool_builder.md
+              - Tool Discovery: reference/tools/core/utils/tool_discovery.md
       - Implementations:
         - Overview: reference/tools/implementations/index.md
         - RAG Tool: reference/tools/implementations/rag_tool.md
         - Weather Tool: reference/tools/implementations/weather_tool.md
-      - Parsers:
-        - Overview: reference/tools/parsers/index.md
-        - Base Parser: reference/tools/parsers/base_tool_call_parser.md
-        - JSON Parser: reference/tools/parsers/json_tool_call_parser.md
-        - Non-JSON Parser: reference/tools/parsers/non_json_tool_call_parser.md
-      - Utils:
-        - Overview: reference/tools/utils/index.md
-        - Token Manager: reference/tools/utils/token_manager.md
+        - DuckDuckGo Tool: reference/tools/implementations/duckduckgo_tool.md
     - Utils:
       - Overview: reference/utils/index.md
       - Factory: reference/utils/factory.md
