@@ -131,9 +131,4 @@ ibmcloud ce application get --name flexo
   ```
 - Mounted files (like agent.yaml) are available as files at the specified path
 
-## Next Steps
-- [Configure Environment Variables](../../configuration/environment.md)
-- [Monitor Logs](https://cloud.ibm.com/docs/codeengine?topic=codeengine-view-logs)
-- [Set Up Custom Domains](https://cloud.ibm.com/docs/codeengine?topic=codeengine-custom-domains)
-
 ----

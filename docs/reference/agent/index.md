@@ -105,4 +105,4 @@ The module implements comprehensive error handling through:
 
 - [Streaming Chat Agent Documentation](chat_agent_streaming.md)
 - [Chat Completions API](../api/request_models.md)
-- [Tool Registry](../tools/tool_registry.md)
+- [Tool Registry](../tools/core/tool_registry.md)

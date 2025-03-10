@@ -12,7 +12,7 @@ from src.prompt_builders.prompt_models import PromptPayload, PromptBuilderOutput
 from src.data_models.chat_completions import TextChatMessage, SystemMessage, UserMessage
 
 
-class GranitePromptBuilder(BasePromptBuilder):
+class WatsonXGranitePromptBuilder(BasePromptBuilder):
     """Prompt builder for the Granite model architecture.
 
     This class handles the construction of prompts and chat messages specifically

@@ -65,6 +65,8 @@ This guide will help you set up and run the generative AI agent project.
            }'
    ```
 
+   > **Note:** Include an `-H "X-API-Key: your-flexo-api-key"` header when `ENABLE_API_KEY=true`
+
    B. Using the Streamlit testing interface:
    ```bash
    # Navigate to the tests directory

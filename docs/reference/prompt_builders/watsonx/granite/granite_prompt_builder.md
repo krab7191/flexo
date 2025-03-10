@@ -1,4 +1,4 @@
-::: src.prompt_builders.watsonx.granite.granite_prompt_builder.GranitePromptBuilder
+::: src.prompt_builders.watsonx.granite.granite_prompt_builder.WatsonXGranitePromptBuilder
     options:
         show_root_heading: true
         show_source: true

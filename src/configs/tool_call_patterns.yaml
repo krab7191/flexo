@@ -12,14 +12,7 @@ patterns:
   GranitePattern2: '<|tool_calls|>'
   GranitePattern3: '<tool_calls>'
   GranitePattern4: '[tool_call]'
-  GranitePattern5: | 
-    {
-      "name
-  GranitePattern6: | 
-    ```json
-    {
-      "name
-  GranitePattern7: |
-    ```
-    {
-      "name
+  GranitePattern5: '```[{"name'
+  GranitePattern6: '```json[{"name'
+  GranitePattern7: '```{"name'
+  GranitePattern8: '```json{"name'

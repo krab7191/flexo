@@ -1,6 +1,6 @@
-# Aho Corasick Pattern
+---
 
-::: src.llm.pattern_detection.aho_corasick_pattern.AhoCorasickAutomaton
+::: src.llm.pattern_detection.pattern_utils.load_patterns
     options:
         show_root_heading: true
         show_source: true
@@ -8,7 +8,7 @@
 
 ---
 
-::: src.llm.pattern_detection.aho_corasick_pattern.AhoCorasickBufferedProcessor
+::: src.llm.pattern_detection.pattern_utils.normalize_and_map
     options:
         show_root_heading: true
         show_source: true

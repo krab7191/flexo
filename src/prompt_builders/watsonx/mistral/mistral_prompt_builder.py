@@ -32,7 +32,7 @@ from src.data_models.tools import Tool
 logger = logging.getLogger(__file__)
 
 
-class MistralPromptBuilder(BasePromptBuilder):
+class WatsonXMistralPromptBuilder(BasePromptBuilder):
     """Prompt builder for the Mistral model architecture.
 
     This class handles the construction of prompts and chat messages specifically

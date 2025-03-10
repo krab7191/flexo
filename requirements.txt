@@ -9,8 +9,10 @@ aiohttp>=3.11.11
 requests>=2.32.2
 
 # AI/ML Service SDKs
+mistralai~=1.5.0
 mistral_common>=1.5.1
-openai~=1.60.2
+openai~=1.61.1
+anthropic~=0.45.2
 
 # Vector Database and Search
 elasticsearch>=8.17.0
@@ -22,5 +24,10 @@ PyYAML>=6.0.2
 json5>=0.10.0
 Jinja2>=3.1.4
 
+# For specific tool implementations
+beautifulsoup4~=4.13.3
+
 # Utilities
 tenacity~=9.0.0
+streamlit~=1.42.0
+pytest~=8.3.4

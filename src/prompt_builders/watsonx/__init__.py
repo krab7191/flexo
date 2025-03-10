@@ -1,3 +1,3 @@
-from .llama.llama_prompt_builder import LlamaPromptBuilder
-from .granite.granite_prompt_builder import GranitePromptBuilder
-from .mistral.mistral_prompt_builder import MistralPromptBuilder
+from .llama.llama_prompt_builder import WatsonXLlamaPromptBuilder
+from .granite.granite_prompt_builder import WatsonXGranitePromptBuilder
+from .mistral.mistral_prompt_builder import WatsonXMistralPromptBuilder

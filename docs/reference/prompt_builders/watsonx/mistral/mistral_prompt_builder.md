@@ -1,4 +1,4 @@
-::: src.prompt_builders.watsonx.mistral.mistral_prompt_builder.MistralPromptBuilder
+::: src.prompt_builders.watsonx.mistral.mistral_prompt_builder.WatsonXMistralPromptBuilder
     options:
         show_root_heading: true
         show_source: true

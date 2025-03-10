@@ -12,7 +12,7 @@ from src.data_models.chat_completions import TextChatMessage, SystemMessage, Use
 from src.data_models.tools import Tool
 
 
-class LlamaPromptBuilder(BasePromptBuilder):
+class WatsonXLlamaPromptBuilder(BasePromptBuilder):
     """Prompt builder for the Llama model architecture.
 
     This class handles the construction of prompts and chat messages specifically

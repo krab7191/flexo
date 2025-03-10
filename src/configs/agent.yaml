@@ -3,7 +3,7 @@
 
 # Basic agent configuration
 name: flexo
-history_limit: 4
+history_limit: 3 # You can set to 1 to disable multi-turn
 max_streaming_iterations: 4 # Number of times the agent is allowed to return to streaming (e.g. after tools execution)
 
 # Response timeouts
@@ -35,63 +35,99 @@ system_prompt: |
   actionable responses.
 
 # Core behavior settings
-detection_mode: manual                # Options: manual, vendor
-use_vendor_chat_completions: false    # Options: true, false
+detection_mode: vendor               # Options: manual, vendor
+use_vendor_chat_completions: true    # Options: true, false
 
 # Model Configuration
 models_config:
   main_chat_model:
     # WatsonX Configuration
-    vendor: watsonx-llama # Options: watsonx-llama/granite/mistral, openai, anthropic, mistral-ai
-    model_id: meta-llama/llama-3-405b-instruct # Other options: mistralai/mistral-large, meta-llama/llama-3-405b-instruct, ibm/granite-3-8b-instruct
-    decoding_method: greedy
-    max_new_tokens: 4000
+#    vendor: watsonx-llama # Options: watsonx-llama/granite/mistral, openai, anthropic, mistral-ai
+#    model_id: meta-llama/llama-3-405b-instruct # Other options: mistralai/mistral-large, meta-llama/llama-3-405b-instruct, ibm/granite-3-8b-instruct
+#    decoding_method: greedy
+#    max_new_tokens: 4000
 
     # Alternative OpenAI Configuration (uncomment to use)
-    # vendor: openai
-    # model_id: gpt-4-mini
-    # max_tokens: 4000
-    # temperature: 0.7
+     vendor: openai
+     model_id: gpt-4o-mini
+     max_tokens: 4000
+     temperature: 0.7
+
+     # Alternative Anthropic Configuration (uncomment to use)
+#     vendor: anthropic
+#     model_id: claude-3-5-sonnet-latest
+#     max_tokens: 4000
+#     temperature: 0.7
+
+     # Alternative xAI Configuration (uncomment to use)
+#      vendor: xai
+#      model_id: grok-2-latest
+#      temperature: 0.7
+#      max_tokens: 2000
+#
+     # Alternative Mistral AI Configuration (uncomment to use)
+#      vendor: mistral-ai
+#      model_id: mistral-large-latest
+#      temperature: 0.7
+#      max_tokens: 4096
+
+     # Alternative vLLM Configuration (uncomment to use)
+#     vendor: openai-compat-llama
+#     base_url: http://0.0.0.0:8000/v1
+#     model_id: meta-llama/Llama-3.2-3B-Instruct
+#     max_tokens: 2000
+#     temperature: 0.7
+
+     # Alternative ollama Configuration (uncomment to use)
+#     vendor: openai-compat-granite
+#     base_url: http://0.0.0.0:11434/v1
+#     model_id: granite31
+#     api_key: ollama
+#     max_tokens: 2000
+#     temperature: 0.7
 
 # Tool Configurations
 tools_config:
   # Weather API Integration
-  weather_tool:
+  - name: "weather"
     endpoint_url: "https://api.openweathermap.org/data/2.5/weather"
     api_key_env: "OWM_API_KEY"
-  
-  # Wikipedia API Integration
-  wikipedia_tool:
+
+  # Wikipedia Summary Tool
+  - name: "wikipedia"
     endpoint_url: "https://{lang}.wikipedia.org/api/rest_v1/page/summary/{encoded_query}"
 
+  # DuckDuckGo Search Tool
+  - name: "duckduckgo_search"
+
   # RAG Tool with Elasticsearch (optional, not enabled by default)
-  rag_tool:
-    connector_config:
-      connector_type: elasticsearch
-      index_name: my_index
-      api_key_env: ES_API_KEY
-      endpoint_env: ES_ENDPOINT
-      top_k: 5
-      timeout: 30
-      max_retries: 3
-      query_body:
-        _source: false
-        fields: ["text"]
-        query:
-          bool:
-            must:
-              - match:
-                  text:
-                    query: "$USER_INPUT"
-                    boost: 3.5
-        knn:
-          field: vector
-          query_vector_builder:
-            text_embedding:
-              model_id: thenlper__gte-base
-              model_text: "$USER_INPUT"
-          k: 100
-          num_candidates: 150
-        rank:
-          rrf:
-            rank_window_size: 40
+#  - name: "medicare_search"
+#    connector_config:
+#      connector_type: elasticsearch
+#      index_name: my_index
+#      api_key_env: ES_API_KEY
+#      endpoint_env: ES_ENDPOINT
+#      top_k: 5
+#      timeout: 30
+#      max_retries: 3
+#      query_body:
+#        _source: false
+#        fields: ["text"]
+#        query:
+#          bool:
+#            must:
+#              - match:
+#                  text:
+#                    query: "$USER_INPUT"
+#                    boost: 3.5
+#        knn:
+#          field: vector
+#          query_vector_builder:
+#            text_embedding:
+#              model_id: thenlper__gte-base
+#              model_text: "$USER_INPUT"
+#          k: 100
+#          num_candidates: 150
+#        rank:
+#          rrf:
+#            rank_window_size: 40

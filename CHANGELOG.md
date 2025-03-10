@@ -4,6 +4,26 @@ All notable changes to Flexo will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.0] - 2025-03-10
+
+### Features & Improvements
+- Added multiple new LLM adapters:
+  - Anthropic adapter with dedicated prompt builder
+  - OpenAI compatible adapter with dedicated prompt builder (allows connecting to vLLM, Ollama, etc.)
+  - xAI adapter with dedicated prompt builder
+  - Mistral AI adapter with SSE conversion
+- Refactored tool registration to use `agent.yaml` config definitions instead of class decorators
+- Enhanced pattern detection with improved Aho-Corasick method that handles spaces and linebreaks
+- Added fallback JSON parsing logic for improved robustness
+- Added example DuckDuckGo tool implementation
+
+### Fixes & Updates
+- Fixed issue to allow context in ChatCompletionRequest to be empty dict
+- Improved tool registry logging
+- Updated documentation across multiple components
+
+[v0.2.0]: https://github.com/ibm/flexo/releases/tag/v0.2.0
+
 ## [v0.1.1] - 2024-02-14
 
 ### Features & Improvements

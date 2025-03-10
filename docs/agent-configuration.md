@@ -1,10 +1,10 @@
-# 🤖 Agent Configuration Guide
+# Agent Configuration Guide
 
-## 📚 Overview
+## Overview
 
 This guide explains how to configure the Flexo agent's behavior through the `agent.yaml` configuration file.
 
-## ⚙️ Configuration Structure
+## Configuration Structure
 
 ### Basic Settings
 
@@ -65,27 +65,28 @@ models_config:
 
 ### Tool Configuration
 
-#### Weather Tool
+Tools are configured as a list under `tools_config`. The name specified in each tool configuration is used to search for the corresponding implementation.
+
 ```yaml
-  weather_tool:
-    name: weather_tool
+tools_config:
+  # Weather API Integration
+  - name: "weather"
     endpoint_url: "https://api.openweathermap.org/data/2.5/weather"
     api_key_env: "OWM_API_KEY"
-```
 
-#### Wikipedia Tool
-```yaml
-  wikipedia_tool:
-    name: wikipedia_tool
+  # Wikipedia Summary Tool
+  - name: "wikipedia"
     endpoint_url: "https://{lang}.wikipedia.org/api/rest_v1/page/summary/{encoded_query}"
+
+  # DuckDuckGo Search Tool
+  - name: "duckduckgo_search"
 ```
 
-#### RAG Tool (optional, not enabled by default)
-Example hybrid search:
+#### RAG Tool Example (Elasticsearch)
+
 ```yaml
-  rag_tool:
-    name: rag_tool
-    description: "Tool used to retrieve information from the 'Medicare and You Handbook 2025' paper using natural language search."
+tools_config:
+  - name: "medicare_search"
     connector_config:
       connector_type: elasticsearch
       index_name: my_index
@@ -117,26 +118,28 @@ Example hybrid search:
             rank_window_size: 40
 ```
 
-
 ---
 
-## 🛠️ Implementation Details
+## Implementation Details
 
 ### Tool Detection Strategies
 
 Based on the codebase's `tool_detection` module:
 
 1. **Vendor Detection** (`detection_mode: vendor`):
-   - Uses vendor's native tool calling capabilities
-   - Handled by `VendorToolCallDetectionStrategy`
+
+     - Uses vendor's native tool calling capabilities
+     - Handled by `VendorToolCallDetectionStrategy`
 
 2. **Manual Detection** (`detection_mode: manual`):
-   - Custom pattern-matching for tool calls
-   - Handled by `ManualToolCallDetectionStrategy`
+
+     - Custom pattern-matching for tool calls
+     - Handled by `ManualToolCallDetectionStrategy`
 
 ### Prompt Builders
 
 The system automatically selects the appropriate prompt builder based on the vendor:
+
 - `AnthropicPromptBuilder`
 - `OpenAIPromptBuilder`
 - `MistralAIPromptBuilder`
@@ -146,21 +149,24 @@ The system automatically selects the appropriate prompt builder based on the ven
 
 ---
 
-## 🔍 Best Practices
+## Best Practices
 
 1. **Tool Configuration**
-   - Use environment variables for sensitive credentials
-   - Configure appropriate timeouts and retry logic
-   - Set meaningful tool descriptions
+
+     - Use environment variables for sensitive credentials
+     - Configure appropriate timeouts and retry logic
+     - Set meaningful tool descriptions
+     - Use the appropriate tool name to link to implementation
 
 2. **System Prompt**
-   - Keep instructions clear and specific
-   - Include explicit tool usage guidelines
-   - Define error handling preferences
+
+     - Keep instructions clear and specific
+     - Include explicit tool usage guidelines
+     - Define error handling preferences
 
 ---
 
-## 📚 Related Documentation
+## Related Documentation
 - See `tools/` documentation for detailed tool configuration
 - Check `llm/adapters/` for vendor-specific options
 - Review `prompt_builders/` for prompt customization

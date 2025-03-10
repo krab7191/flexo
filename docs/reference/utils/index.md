@@ -1,6 +1,6 @@
-# 🔧 Utils Documentation
+# Utils Documentation
 
-## 📚 Overview
+## Overview
 
 The Utils module provides essential factory patterns and utility classes that support the core functionality of the system. These utilities focus on creating and managing different types of builders, parsers, and formatters used throughout the application.
 
@@ -28,36 +28,37 @@ graph TB
 
 ---
 
-## 🏗️ Components
+## Components
 
 ### Factory Classes
 
-- **🏭 PromptBuilderFactory**
-  - Creates appropriate prompt builders based on vendor type
+**`PromptBuilderFactory`**
+
+- Creates appropriate prompt builders based on vendor type
   - Supports multiple LLM providers:
     - Anthropic
     - OpenAI
     - MistralAI
     - WatsonX (Granite, Llama, Mistral)
-  - Located in `factory.md`
 
-- **🛠️ ToolCallParserFactory**
-  - Generates parser instances for tool calls
+**`ToolCallParserFactory`**
+
+- Generates parser instances for tool calls
   - Supports:
     - JSON format parsing
     - Non-JSON format parsing
-  - Located in `factory.md`
 
 ### Enums
 
-- **📋 FormatType**
-  - Defines supported format types for tool calls
+**`FormatType`**
+
+- Defines supported format types for tool calls
   - Used by parser factories
   - Located in `factory.md`
 
 ---
 
-## 🔍 Implementation Details
+## Implementation Details
 
 ### Factory Pattern Benefits
 
@@ -68,10 +69,10 @@ graph TB
 
 ---
 
-## 📚 Further Documentation
+## Further Documentation
 
-- 🏭 See individual builder documentation in [prompt_builders](../prompt_builders/index.md) directory
-- 🛠️ Check parser implementations in [parsers](../tools/parsers/index.md) directory
-- 📋 Review format types and enums in [factory](factory.md)
+- See individual builder documentation in [prompt_builders](../prompt_builders/index.md) directory
+- Check parser implementations in [parsers](../tools/core/parsers/index.md) directory
+- Review format types and enums in [factory](factory.md)
 
 ---
