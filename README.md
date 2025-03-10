@@ -67,12 +67,12 @@ Flexo supports multiple LLM providers through a unified adapter interface. Confi
 
 ### Cloud Hosted Providers
 
-| Provider | Supported API Endpoints                        | Service Type |
-|----------|------------------------------------------------|--------------|
-| OpenAI | `/chat/completions`                            | ☁️ API Service |
-| Anthropic | `/messages`                                    | ☁️ API Service |
-| X.AI | `/chat/completions`                            | ☁️ API Service |
-| Mistral AI | `/chat/completions`                            | ☁️ API Service |
+| Provider    | Supported API Endpoints                        | Service Type |
+|-------------|------------------------------------------------|--------------|
+| OpenAI      | `/chat/completions`                            | ☁️ API Service |
+| Anthropic   | `/messages`                                    | ☁️ API Service |
+| xAI         | `/chat/completions`                            | ☁️ API Service |
+| Mistral AI  | `/chat/completions`                            | ☁️ API Service |
 | IBM WatsonX | `/text/chat_stream`, `/text/generation_stream` | ☁️ API Service |
 
 ### Local/Self-Hosted Options
