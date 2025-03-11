@@ -83,7 +83,8 @@ tools_config:
   rag_tool:
     connector_config:
       connector_type: elasticsearch
-      index_name: search-cat
+      # index_name: search-cat
+      index_name: search-ncat
       api_key_env: ES_API_KEY
       endpoint_env: ES_ENDPOINT
       top_k: 5
@@ -97,6 +98,48 @@ tools_config:
             must:
               - match:
                   text:
+                    query: "$USER_INPUT"
+                    boost: 3.5
+        knn:
+          field: vector
+          query_vector_builder:
+            text_embedding:
+              model_id: thenlper__gte-base
+              model_text: "$USER_INPUT"
+          k: 100
+          num_candidates: 150
+        rank:
+          rrf:
+            rank_window_size: 40
+
+  image_rag:
+    connector_config:
+      connector_type: elasticsearch
+      # index_name: search-cat
+      index_name: search-ncat
+      api_key_env: ES_API_KEY
+      endpoint_env: ES_ENDPOINT
+
+      # IBM COS Configuration - using exact environment variable names
+      ibm_cos_api_key_env: IBM_COS_API_KEY
+      ibm_cos_service_instance_id_env: IBM_COS_SERVICE_INSTANCE_ID
+      ibm_cos_endpoint_env: IBM_COS_ENDPOINT
+      ibm_cos_bucket_env: IBM_COS_BUCKET
+      ibm_cos_public_endpoint_env: IBM_COS_PUBLIC_ENDPOINT
+
+      # Query configuration
+      max_images: 1
+      top_k: 5
+      timeout: 30
+      max_retries: 3
+      query_body:
+        _source: false
+        fields: ["text", "content", "content_type", "image_url", "image_hash", "section_header", "page_number"]
+        query:
+          bool:
+            must:
+              - match:
+                  content:
                     query: "$USER_INPUT"
                     boost: 3.5
         knn:

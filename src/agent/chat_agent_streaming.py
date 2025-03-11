@@ -16,6 +16,8 @@ from src.data_models.chat_completions import (
     SystemMessage,
     TextChatMessage,
     AssistantMessage,
+    UserMessage,
+    UserImageURLContent
 )
 from src.llm import LLMFactory
 from src.tools import ToolRegistry
@@ -98,9 +100,11 @@ class StreamingChatAgent:
         self.use_vendor_chat_completions = self.config.get("use_vendor_chat_completions", True)
 
         # Load parser config if needed for manual detection
-        self.logger.info(f" ---- IMPORTANT! ----\n\nMain Chat Model Config:\n{json.dumps(self.main_chat_model_config, indent=4)}\n")
-        self.logger.info(f" ---- IMPORTANT! ---- Tool Detection Mode: {self.detection_mode}")
-        self.logger.info(f" ---- IMPORTANT! ---- Vendor Chat API Mode: {self.use_vendor_chat_completions}")
+        self.logger.info("\n\n" + "=" * 60 + "\n" + "Agent Configuration Summary" + "\n" + "=" * 60 + "\n" +
+                         f"Main Chat Model Config:\n{json.dumps(self.main_chat_model_config, indent=4)}\n" +
+                         f"Tool Detection Mode: {self.detection_mode}\n" +
+                         f"Vendor Chat API Mode: {self.use_vendor_chat_completions}\n" +
+                         "\n" + "=" * 60 + "\n")
         if self.detection_mode == "manual":
             with open("src/configs/parsing.yaml", "r") as f:
                 parser_config = yaml.safe_load(f)
@@ -294,7 +298,7 @@ class StreamingChatAgent:
         """Execute detected tools and process their results.
 
         Runs the detected tools concurrently and handles their results, including
-        error cases.
+        error cases. Handles image content by adding it to the conversation as UserMessage.
 
         Args:
             context (StreamContext): Current streaming context
@@ -323,6 +327,7 @@ class StreamingChatAgent:
                 )
             else:
                 tool_results.append(result)
+                # Add the ToolMessage with text result
                 context.conversation_history.append(
                     ToolMessage(
                         name=call.function.name,
@@ -331,7 +336,17 @@ class StreamingChatAgent:
                     )
                 )
 
-        self.logger.debug("Tool execution results: %s", tool_results)
+                # Process image content if present
+                if isinstance(result, dict) and result.get("context") is not None:
+                    if isinstance(result["context"], dict) and "content_objects" in result["context"]:
+                        content_objects = result["context"]["content_objects"]
+
+                        # Add image content to conversation if present
+                        if content_objects and any(isinstance(obj, UserImageURLContent) for obj in content_objects):
+                            context.conversation_history.append(
+                                UserMessage(content=content_objects)
+                            )
+
         context.current_state = StreamState.INTERMEDIATE
         yield await SSEChunk.make_status_chunk(AgentStatus.TOOLS_EXECUTED)
 
@@ -453,17 +468,25 @@ class StreamingChatAgent:
         Raises:
             RuntimeError: If a requested tool is not found
         """
+
         async def run_tool(tool_call: ToolCall):
             try:
                 tool = self.tool_registry.get_tool(tool_call.function.name)
                 if not tool:
                     raise RuntimeError(f"Tool {tool_call.function.name} not found")
 
-                result = await tool.execute(
+                # Execute the tool and get the full ToolResponse object
+                tool_response = await tool.execute(
                     context=context,
                     **tool_call.function.arguments
                 )
-                return {"tool_name": tool_call.function.name, "result": result.result}
+
+                # Return a dictionary with tool name, result text, and the context dictionary
+                return {
+                    "tool_name": tool_call.function.name,
+                    "result": tool_response.result,
+                    "context": tool_response.context
+                }
 
             except Exception as e:
                 self.logger.error(f"Error executing tool {tool_call.function.name}", exc_info=True)

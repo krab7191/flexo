@@ -50,28 +50,28 @@ class ToolRegistry:
         logger.debug("Starting tool registration process")
 
         # Initialize weather tool
-        weather_config = self.config.get("weather_tool")
-        if weather_config:
-            logger.debug("Initializing Weather tool with config: %s", weather_config)
-            try:
-                weather_tool = WeatherTool(config=weather_config)
-                self.register_tool(weather_tool)
-                logger.debug("Weather tool successfully registered")
-            except Exception as e:
-                logger.error("Failed to initialize Weather tool: %s", str(e))
-                raise
+        # weather_config = self.config.get("weather_tool")
+        # if weather_config:
+        #     logger.debug("Initializing Weather tool with config: %s", weather_config)
+        #     try:
+        #         weather_tool = WeatherTool(config=weather_config)
+        #         self.register_tool(weather_tool)
+        #         logger.debug("Weather tool successfully registered")
+        #     except Exception as e:
+        #         logger.error("Failed to initialize Weather tool: %s", str(e))
+        #         raise
 
         # Initialize wikipedia tool
-        weather_config = self.config.get("wikipedia_tool")
-        if weather_config:
-            logger.debug("Initializing wikipedia tool with config: %s", weather_config)
-            try:
-                weather_tool = WikipediaTool(config=weather_config)
-                self.register_tool(weather_tool)
-                logger.debug("wikipedia tool successfully registered")
-            except Exception as e:
-                logger.error("Failed to initialize wikipedia tool: %s", str(e))
-                raise
+        # wiki_config = self.config.get("wikipedia_tool")
+        # if wiki_config:
+        #     logger.debug("Initializing wikipedia tool with config: %s", wikipedia_config)
+        #     try:
+        #         wiki_tool = WikipediaTool(config=wikipedia_config)
+        #         self.register_tool(wiki_tool)
+        #         logger.debug("wikipedia tool successfully registered")
+        #     except Exception as e:
+        #         logger.error("Failed to initialize wikipedia tool: %s", str(e))
+        #         raise
 
         # Initialize RAG tool (disabled by default)
         # rag_config = self.config.get("rag_tool")
