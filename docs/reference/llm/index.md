@@ -11,6 +11,7 @@ The **LLM (Large Language Model) Module** provides interfaces and implementation
 
 ### LLM Adapters
 Adapters to support multiple LLM providers:
+
 - **`BaseVendorAdapter`** - Abstract base class for all LLM vendor adapters.
 - **`AnthropicAdapter`** - Adapter for Anthropic’s Claude models.
 - **`MistralAdapter`** - Adapter for Mistral AI models.
