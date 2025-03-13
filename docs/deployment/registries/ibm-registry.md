@@ -67,4 +67,3 @@ docker push us.icr.io/<your-namespace>/flexo:latest
 
 - [Deploy to Code Engine](../platforms/code-engine.md)
 - [Configure Environment Variables](../../configuration/environment.md)
-```
