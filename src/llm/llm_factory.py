@@ -2,7 +2,7 @@
 
 import logging
 import os
-from typing import Dict, Any, Type, Callable, Optional, Union, TypeVar
+from typing import Dict, Any, Type, Optional, TypeVar
 
 from .adapters.base_vendor_adapter import BaseVendorAdapter
 from .adapters.watsonx.watsonx_config import WatsonXConfig
@@ -165,7 +165,11 @@ class LLMFactory:
                 **kwargs
             )
 
-        # Handle standard adapters from registry
+        # Check for OpenAI compatibility vendors (partial match)
+        if "openai-compat" in vendor:
+            return OpenAICompatAdapter(model_name=model_id, **kwargs)
+
+        # Handle standard adapters from registry with exact match
         adapter_class = cls._adapter_registry.get(vendor)
         if adapter_class:
             return adapter_class(model_name=model_id, **kwargs)
