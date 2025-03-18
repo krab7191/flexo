@@ -16,3 +16,4 @@ patterns:
   GranitePattern6: '```json[{"name'
   GranitePattern7: '```{"name'
   GranitePattern8: '```json{"name'
+  GranitePattern9: '[{\"name'

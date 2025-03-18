@@ -10,6 +10,10 @@ max_streaming_iterations: 4 # Number of times the agent is allowed to return to 
 timeouts:
   model_response_timeout: 60
 
+# CORS allowed origins (optional)
+allowed_origins:
+  - http://localhost:8080 # example for local Open WebUI
+
 # System prompt defining agent behavior and capabilities
 system_prompt: |
   I am a helpful AI assistant focused on clear, accurate, and direct communication. 
