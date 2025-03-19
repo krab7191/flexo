@@ -1,19 +1,43 @@
 # src/configs/tool_call_patterns.yaml
 
 patterns:
-  MistralPattern0: '[{"name'
-  MistralPattern1: '[TOOL_CALL]'
-  MistralPattern2: '[TOOL_CALLS]'
-  LlamaPattern0: '<function='
-  LlamaPattern1: '<|python_tag|>'
-  LlamaPattern2: '{"name'
-  GranitePattern0: '<|tool_call|>'
-  GranitePattern1: '<tool_call>'
-  GranitePattern2: '<|tool_calls|>'
-  GranitePattern3: '<tool_calls>'
-  GranitePattern4: '[tool_call]'
-  GranitePattern5: '```[{"name'
-  GranitePattern6: '```json[{"name'
-  GranitePattern7: '```{"name'
-  GranitePattern8: '```json{"name'
-  GranitePattern9: '[{\"name'
+  # JSON Array Format with Double Quotes
+  JsonArrayPattern0: '[{"name'
+  JsonArrayPattern1: '[{\\"name'
+
+  # JSON Array Format with Single Quotes
+  JsonArrayPattern2: "[{'name"
+  JsonArrayPattern3: "[{'name"
+
+  # Function Call Formats with Double Quotes
+  FunctionCallPattern0: '<function='
+  FunctionCallPattern1: '{"name'
+
+  # Function Call Formats with Single Quotes
+  FunctionCallPattern2: "{'name"
+
+  # Tool Call Tag Formats
+  ToolCallTagPattern0: '<|tool_call|>'
+  ToolCallTagPattern1: '<tool_call>'
+  ToolCallTagPattern2: '[TOOL_CALL]'
+  ToolCallTagPattern3: '[tool_call]'
+
+  # Tool Calls Tag Formats
+  ToolCallsTagPattern0: '<|tool_calls|>'
+  ToolCallsTagPattern1: '<tool_calls>'
+  ToolCallsTagPattern2: '[TOOL_CALLS]'
+
+  # Code Block Formats with Double Quotes
+  CodeBlockPattern0: '```[{"name'
+  CodeBlockPattern1: '```json[{"name'
+  CodeBlockPattern2: '```{"name'
+  CodeBlockPattern3: '```json{"name'
+
+  # Code Block Formats with Single Quotes
+  CodeBlockPattern4: "```[{'name"
+  CodeBlockPattern5: "```json[{'name"
+  CodeBlockPattern6: "```{'name"
+  CodeBlockPattern7: "```json{'name"
+
+  # Programming Language Tags
+  LanguageTagPattern0: '<|python_tag|>'

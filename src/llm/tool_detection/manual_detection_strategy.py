@@ -65,7 +65,7 @@ class ManualToolCallDetectionStrategy(BaseToolCallDetectionStrategy):
         """
         self.logger.debug("Resetting detector state")
         self.pattern_detector.reset_states()
-        self.pre_tool_call_content.clear()
+        self.pre_tool_call_content = []
         self.tool_call_buffer = ""
         self.in_tool_call = False
         self.accumulation_mode = False
@@ -90,6 +90,14 @@ class ManualToolCallDetectionStrategy(BaseToolCallDetectionStrategy):
         if not chunk_content:
             return DetectionResult(state=DetectionState.NO_MATCH, sse_chunk=sse_chunk)
 
+        # If already in tool call detection mode, continue accumulating and report a partial match.
+        if self.in_tool_call:
+            self.tool_call_buffer += chunk_content
+            return DetectionResult(
+                state=DetectionState.PARTIAL_MATCH,
+                sse_chunk=sse_chunk
+            )
+
         # Process the chunk through the pattern detector.
         result = await self.pattern_detector.process_chunk(chunk_content)
 
@@ -97,21 +105,13 @@ class ManualToolCallDetectionStrategy(BaseToolCallDetectionStrategy):
             return DetectionResult(state=DetectionState.NO_MATCH, sse_chunk=sse_chunk)
 
         # If a pattern is matched, switch into tool call mode.
-        # Return an empty string for content so that no part of the tool call leaks into the output.
+        # Return any content remaining that could have been in the same chunk as the patter or in a buffer
         if result.matched:
             self.in_tool_call = True
             self.tool_call_buffer = result.text_with_tool_call
             return DetectionResult(
                 state=DetectionState.PARTIAL_MATCH,
-                content="",  # No content is emitted once a tool call is detected
-                sse_chunk=sse_chunk
-            )
-
-        # If already in tool call detection mode, continue accumulating and report a partial match.
-        if self.in_tool_call:
-            self.tool_call_buffer += chunk_content
-            return DetectionResult(
-                state=DetectionState.PARTIAL_MATCH,
+                content=result.output,
                 sse_chunk=sse_chunk
             )
 
@@ -150,6 +150,8 @@ class ManualToolCallDetectionStrategy(BaseToolCallDetectionStrategy):
 
             # Parse accumulated tool call
             parsed_tool_call_data = self.tool_call_parser.parse(self.tool_call_buffer)
+            self.logger.debug(f"Tool call buffer: {self.tool_call_buffer}")
+            self.logger.debug(f"Parsed tool call data: {parsed_tool_call_data}")
 
             if "error" in parsed_tool_call_data:
                 self.logger.error(f"Tool call parsing failed: {parsed_tool_call_data['error']}")

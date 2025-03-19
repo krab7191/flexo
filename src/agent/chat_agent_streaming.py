@@ -160,7 +160,6 @@ class StreamingChatAgent:
 
                 case StreamState.STREAMING:
                     self.logger.info(f"--- Entering Streaming State ---")
-                    self.detection_strategy.reset()
                     async for item in self._handle_streaming(context):
                         yield item
 
@@ -205,6 +204,7 @@ class StreamingChatAgent:
         Raises:
             Exception: If maximum streaming iterations are exceeded
         """
+        self.detection_strategy.reset()
         context.streaming_entry_count += 1
         if context.streaming_entry_count > context.max_streaming_iterations:
             self.logger.error("Maximum streaming iterations reached. Aborting further streaming.")
@@ -253,6 +253,7 @@ class StreamingChatAgent:
                 return
 
         final_result = await self.detection_strategy.finalize_detection(context)
+        self.logger.debug(f"Final detection result: {final_result}")
 
         if final_result.state == DetectionState.COMPLETE_MATCH:
             async for chunk in self._handle_complete_match(context, final_result, accumulated_content):
