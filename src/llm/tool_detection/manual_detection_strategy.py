@@ -200,7 +200,7 @@ class ManualToolCallDetectionStrategy(BaseToolCallDetectionStrategy):
                 type=tool_call_dict.get("type", "function"),
                 function=FunctionDetail(
                     name=tool_call_dict.get("name"),
-                    arguments=tool_call_args
+                    arguments=str(tool_call_args)
                 )
             ))
         return tool_calls
