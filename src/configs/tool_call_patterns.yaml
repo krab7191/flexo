@@ -3,11 +3,13 @@
 patterns:
   # JSON Array Format with Double Quotes
   JsonArrayPattern0: '[{"name'
-  JsonArrayPattern1: '[{\\"name'
+  JsonArrayPattern1: '[{\"name'
+  JsonArrayPattern2: '[{\\"name'
 
   # JSON Array Format with Single Quotes
-  JsonArrayPattern2: "[{'name"
   JsonArrayPattern3: "[{'name"
+  JsonArrayPattern4: "[{'name"
+  JsonArrayPattern5: "[{\\'name"
 
   # Function Call Formats with Double Quotes
   FunctionCallPattern0: '<function='
