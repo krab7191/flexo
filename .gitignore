@@ -6,3 +6,5 @@
 *__pycache__
 sandbox.ipynb
 .webui_secret_key
+venv/
+.venv/

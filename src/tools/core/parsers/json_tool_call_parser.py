@@ -1,8 +1,9 @@
 # src/tools/core/parsers/json_tool_call_parser.py
 
-import json5
 import re
+import json5
 from typing import Dict, Any, List
+
 from src.tools.core.parsers.base_tool_call_parser import BaseToolCallParser
 
 
@@ -10,6 +11,7 @@ class JSONToolCallParser(BaseToolCallParser):
     """Enhanced parser for extracting and processing JSON tool calls from raw text.
 
     This parser handles common LLM JSON generation errors including:
+
     - Semicolons instead of commas between array items
     - Missing or extra commas
     - Unquoted keys
