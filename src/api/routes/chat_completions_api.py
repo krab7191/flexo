@@ -1,5 +1,3 @@
-# src/api/routes/chat_completions_api.py
-
 """Chat Completions API Module.
 
 This module implements a FastAPI router for streaming chat completion functionality,
@@ -10,14 +8,11 @@ The module provides:
 - Message format conversion
 - Streaming chat completions
 - SSE (Server-Sent Events) response handling
-
-Dependencies:
-    - FastAPI for route handling
-    - StreamingChatAgent for chat processing
-    - Pydantic models for request/response validation
+- Agent info endpoint (compatible with OpenAI's /models format)
 """
 
 import os
+import time
 import yaml
 import logging
 from typing import List, Optional
@@ -36,6 +31,9 @@ from src.data_models.chat_completions import (
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
+
+# Capture the agent's start time once when the app starts.
+AGENT_START_TIME = int(time.time())
 
 # Security setup
 API_KEY_NAME = "X-API-KEY"
@@ -118,6 +116,22 @@ def convert_message_content(messages: List[TextChatMessage]) -> List[TextChatMes
     return converted
 
 
+def get_non_sensitive_config(config: dict) -> dict:
+    """Filter the agent configuration to include only non-sensitive parameters.
+
+    Args:
+        config (dict): The full agent configuration.
+
+    Returns:
+        dict: Filtered configuration excluding keys that may be sensitive.
+    """
+    # Exclude keys that include 'key', 'secret', or 'password' (case insensitive)
+    return {
+        k: v for k, v in config.items()
+        if not any(sensitive in k.lower() for sensitive in ["key", "secret", "password"])
+    }
+
+
 @router.post(
     "/chat/completions",
     summary="Generate streaming chat completions",
@@ -193,3 +207,37 @@ async def chat_completions(
     except Exception as e:
         logger.error("Error in /chat/completions: %s", str(e), exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get(
+    "/models",
+    summary="Agent information",
+    description="Returns information about the running agent including its default model and non-sensitive configuration parameters.",
+    tags=["Models"],
+    operation_id="getModels"
+)
+async def get_models(
+    agent: StreamingChatAgent = Depends(get_streaming_agent),
+    api_key: Optional[str] = Depends(get_api_key)
+):
+    """Retrieve agent information in a format similar to OpenAI's models endpoint.
+
+    This endpoint returns the agent's name, default model, creation time,
+    owner, and a selection of non-sensitive configuration parameters.
+    """
+    agent_name = agent.config.get("name", "default-agent")
+    default_model = agent.config.get("model", "default-model")
+    created = agent.config.get("created", AGENT_START_TIME)
+    owned_by = agent.config.get("owned_by", "user")
+    non_sensitive_params = get_non_sensitive_config(agent.config)
+
+    agent_info = {
+        "id": agent_name,
+        "object": "agent",
+        "default_model": default_model,
+        "created": created,
+        "owned_by": owned_by,
+        "params": non_sensitive_params
+    }
+
+    return {"data": [agent_info], "object": "list"}

@@ -4,6 +4,30 @@ All notable changes to Flexo will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.2] - 2025-03-25
+
+### Features & Improvements
+- Added `/models` endpoint and enabled CORS support.
+- Initiated MCP client and tool registry functionality (WIP).
+- Updated tool patterns for enhanced consistency.
+
+### Fixes & Updates
+- Fixed multi tool accumulation issue.
+- Fixed mid-response tool buffer leak.
+- Updated chat completions data models: updated `FunctionDetail` and removed `name` from `ToolCall`.
+
+### Notes
+- MCP configuration in `agent.yaml` is now commented out by default.
+
+[v0.2.2]: https://github.com/ibm/flexo/releases/tag/v0.2.2
+
+## [v0.2.1] - 2025-03-14
+
+### Fixes & Updates
+- Fixed issue with LLMFactory not recognizing openai-compat vendor names
+
+[v0.2.1]: https://github.com/ibm/flexo/releases/tag/v0.2.1
+
 ## [v0.2.0] - 2025-03-10
 
 ### Features & Improvements
@@ -38,6 +62,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated tool configuration and path structures
 - Added Elasticsearch SSL certificate documentation
 
+[v0.1.1]: https://github.com/ibm/flexo/releases/tag/v0.1.1
+
 ## [v0.1.0] - 2024-01-31
 
 ### Initial Release
@@ -52,5 +78,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Robust prompt building and parsing systems
 - Comprehensive LLM integration components
 
-[v0.1.1]: https://github.com/ibm/flexo/releases/tag/v0.1.1
 [v0.1.0]: https://github.com/ibm/flexo/releases/tag/v0.1.0

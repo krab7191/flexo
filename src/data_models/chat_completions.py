@@ -90,7 +90,7 @@ class FunctionDetail(BaseModel):
         arguments (Dict): Dictionary of arguments to be passed to the function.
     """
     name: str = Field(..., description="Name of the function")
-    arguments: Dict = Field(..., description="Arguments for the function")
+    arguments: str = Field(..., description="Arguments for the function")
 
 
 class ToolCall(BaseModel):
@@ -194,7 +194,6 @@ class ToolMessage(BaseModel):
             Defaults to '123abcdef'.
     """
     role: Literal["tool"] = Field(default="tool", description="Role is fixed to 'tool' for tool messages")
-    name: str = Field(..., description="The name of the tool generating the message")
     content: str = Field(..., description="The content of the tool message")
     tool_call_id: Optional[str] = Field(default='123abcdef', description="Tool call ID")
 

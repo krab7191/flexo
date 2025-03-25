@@ -1,7 +1,7 @@
 # src/agent/chat_streaming_agent.py
 
 import os
-import json
+import json5
 import yaml
 import asyncio
 import logging
@@ -99,7 +99,7 @@ class StreamingChatAgent:
 
         # Load parser config if needed for manual detection
         self.logger.info("\n\n" + "=" * 60 + "\n" + "Agent Configuration Summary" + "\n" + "=" * 60 + "\n" +
-                         f"Main Chat Model Config:\n{json.dumps(self.main_chat_model_config, indent=4)}\n" +
+                         f"Main Chat Model Config:\n{json5.dumps(self.main_chat_model_config, indent=4)}\n" +
                          f"Tool Detection Mode: {self.detection_mode}\n" +
                          f"Vendor Chat API Mode: {self.use_vendor_chat_completions}\n" +
                          "\n" + "=" * 60 + "\n")
@@ -122,9 +122,12 @@ class StreamingChatAgent:
             vendor=self.main_chat_model_config.get('vendor')
         )
 
-        # Initialize ToolRegistry
-        self.tool_registry = ToolRegistry()
-        self.tool_registry.load_from_config(tool_configs=self.config.get("tools_config"))
+        # Initialize tool registry
+        self.tool_registry = ToolRegistry(
+            tools_config=self.config.get("tools_config"),
+            mcp_config=self.config.get("mcp_config")
+        )
+        asyncio.create_task(self.tool_registry.initialize_all_tools())
 
     @handle_streaming_errors
     async def stream_step(
@@ -160,7 +163,6 @@ class StreamingChatAgent:
 
                 case StreamState.STREAMING:
                     self.logger.info(f"--- Entering Streaming State ---")
-                    self.detection_strategy.reset()
                     async for item in self._handle_streaming(context):
                         yield item
 
@@ -205,6 +207,7 @@ class StreamingChatAgent:
         Raises:
             Exception: If maximum streaming iterations are exceeded
         """
+        self.detection_strategy.reset()
         context.streaming_entry_count += 1
         if context.streaming_entry_count > context.max_streaming_iterations:
             self.logger.error("Maximum streaming iterations reached. Aborting further streaming.")
@@ -218,7 +221,6 @@ class StreamingChatAgent:
             conversation_history=context.conversation_history,
             tool_definitions=context.tool_definitions if self.detection_mode == "manual" else None
         )
-        self.logger.debug(f"Prompt payload: {prompt_payload}")
 
         prompt_output: PromptBuilderOutput = (
             await self.prompt_builder.build_chat(prompt_payload) if self.use_vendor_chat_completions
@@ -253,6 +255,7 @@ class StreamingChatAgent:
                 return
 
         final_result = await self.detection_strategy.finalize_detection(context)
+        self.logger.debug(f"Final detection result: {final_result}")
 
         if final_result.state == DetectionState.COMPLETE_MATCH:
             async for chunk in self._handle_complete_match(context, final_result, accumulated_content):
@@ -328,7 +331,6 @@ class StreamingChatAgent:
                 tool_results.append(result)
                 context.conversation_history.append(
                     ToolMessage(
-                        name=call.function.name,
                         content=result["result"],
                         tool_call_id=call.id
                     )
@@ -405,7 +407,7 @@ class StreamingChatAgent:
 
         return StreamContext(
             conversation_history=selected_history,
-            tool_definitions=self.tool_registry.get_tool_definitions(),
+            tool_definitions=await self.tool_registry.get_tool_definitions(),
             context=api_passed_context,
             llm_factory=self.llm_factory,
             current_state=StreamState.STREAMING,
@@ -458,13 +460,14 @@ class StreamingChatAgent:
         """
         async def run_tool(tool_call: ToolCall):
             try:
-                tool = self.tool_registry.get_tool(tool_call.function.name)
+                tool = await self.tool_registry.get_tool(tool_call.function.name)
                 if not tool:
                     raise RuntimeError(f"Tool {tool_call.function.name} not found")
-
+                tool_args = json5.loads(tool_call.function.arguments)
+                self.logger.info(f"Running tool {tool_call.function.name} with arguments: {tool_args}")
                 result = await tool.execute(
                     context=context,
-                    **tool_call.function.arguments
+                    **tool_args
                 )
                 return {"tool_name": tool_call.function.name, "result": result.result}
 

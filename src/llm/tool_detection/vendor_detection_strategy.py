@@ -118,7 +118,7 @@ class VendorToolCallDetectionStrategy(BaseToolCallDetectionStrategy):
                     id=(tool_call_data and tool_call_data.id) or "call_generated",
                     function=FunctionDetail(
                         name=self.partial_name,
-                        arguments=parsed_args
+                        arguments=str(parsed_args)
                     )
                 )
                 self.collected_tool_calls.append(tool_call)

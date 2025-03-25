@@ -1,6 +1,7 @@
 # src/prompt_builders/openai_compat/granite/granite_prompt_builder.py
 
 import yaml
+import logging
 from pathlib import Path
 from jinja2 import Template
 from typing import Optional
@@ -31,6 +32,7 @@ class OpenAICompatGranitePromptBuilder(BasePromptBuilder):
                 If None, uses default directory 'src/prompt_builders/granite'.
         """
         super().__init__()
+        self.logger = logging.getLogger(self.__class__.__name__)
         self.config = self._load_config()
         self.template = self._load_template(template_dir) if template_dir else self._load_template()
 
@@ -114,6 +116,7 @@ class OpenAICompatGranitePromptBuilder(BasePromptBuilder):
             'date_string': datetime.now().strftime("%d %b %Y"),
             'tool_instructions': self.config['system_prompt']['tool_instructions']
         }
+        self.logger.debug(f'template_vars: {template_vars}')
 
         return PromptBuilderOutput(text_prompt=self.template.render(**template_vars))
 
