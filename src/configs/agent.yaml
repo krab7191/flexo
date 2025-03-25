@@ -91,11 +91,11 @@ models_config:
 #     temperature: 0.7
 
 # MCP configuration
-mcp_config:
-  # Example SSE
-  transport: sse
-  sse_url: "http://localhost:8001/sse"
-  sampling_enabled: false
+#mcp_config:
+#  # Example SSE
+#  transport: sse
+#  sse_url: "http://localhost:8001/sse"
+#  sampling_enabled: false
 
   # Example stdio
 #  transport: stdio
