@@ -122,9 +122,12 @@ class StreamingChatAgent:
             vendor=self.main_chat_model_config.get('vendor')
         )
 
-        # Initialize ToolRegistry
-        self.tool_registry = ToolRegistry()
-        self.tool_registry.load_from_config(tool_configs=self.config.get("tools_config"))
+        # Initialize tool registry
+        self.tool_registry = ToolRegistry(
+            tools_config=self.config.get("tools_config"),
+            mcp_config=self.config.get("mcp_config")
+        )
+        asyncio.create_task(self.tool_registry.initialize_all_tools())
 
     @handle_streaming_errors
     async def stream_step(
@@ -404,7 +407,7 @@ class StreamingChatAgent:
 
         return StreamContext(
             conversation_history=selected_history,
-            tool_definitions=self.tool_registry.get_tool_definitions(),
+            tool_definitions=await self.tool_registry.get_tool_definitions(),
             context=api_passed_context,
             llm_factory=self.llm_factory,
             current_state=StreamState.STREAMING,
@@ -457,10 +460,11 @@ class StreamingChatAgent:
         """
         async def run_tool(tool_call: ToolCall):
             try:
-                tool = self.tool_registry.get_tool(tool_call.function.name)
+                tool = await self.tool_registry.get_tool(tool_call.function.name)
                 if not tool:
                     raise RuntimeError(f"Tool {tool_call.function.name} not found")
                 tool_args = json5.loads(tool_call.function.arguments)
+                self.logger.info(f"Running tool {tool_call.function.name} with arguments: {tool_args}")
                 result = await tool.execute(
                     context=context,
                     **tool_args

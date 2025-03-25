@@ -90,6 +90,20 @@ models_config:
 #     max_tokens: 2000
 #     temperature: 0.7
 
+# MCP configuration
+mcp_config:
+  # Example SSE
+  transport: sse
+  sse_url: "http://localhost:8001/sse"
+  sampling_enabled: false
+
+  # Example stdio
+#  transport: stdio
+#  command: python
+#  args: ["weather/weather.py"]
+#  env: null
+#  sampling_enabled: false
+
 # Tool Configurations
 tools_config:
   # Weather API Integration
