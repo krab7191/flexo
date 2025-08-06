@@ -1,34 +1,35 @@
 # Core Framework Dependencies
-fastapi>=0.115.6
-starlette>=0.41.3
-uvicorn>=0.34.0
-pydantic>=2.10.4
+fastapi~=0.116.1
+starlette~=0.47.2
+uvicorn~=0.35.0
+pydantic~=2.11.7
 
 # HTTP and API Client Libraries
-aiohttp>=3.11.11
-requests>=2.32.2
+aiohttp~=3.12.15
+requests~=2.32.4
 
 # AI/ML Service SDKs
-mistralai~=1.5.0
-mistral_common>=1.5.1
-openai~=1.61.1
-anthropic~=0.45.2
-mcp~=1.6.0
+mistralai~=1.9.3
+mistral_common~=1.8.3
+openai~=1.99.1
+anthropic~=0.61.0
+mcp~=1.12.3
 
 # Vector Database and Search
-elasticsearch>=8.17.0
-pymilvus>=2.5.0
+elasticsearch~=9.1.0
+pymilvus~=2.5.14
 
 # Configuration and Environment
-python-dotenv>=1.0.1
-PyYAML>=6.0.2
-json5>=0.10.0
-Jinja2>=3.1.4
+python-dotenv~=1.1.1
+PyYAML~=6.0.2
+json5~=0.12.0
+Jinja2~=3.1.6
 
 # For specific tool implementations
-beautifulsoup4~=4.13.3
+beautifulsoup4~=4.13.4
 
 # Utilities
-tenacity~=9.0.0
-streamlit~=1.42.0
-pytest~=8.3.4
+tenacity~=9.1.2
+streamlit~=1.48.0
+pytest~=8.4.1
+anyio~=4.10.0
